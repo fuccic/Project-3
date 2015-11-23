@@ -7,21 +7,105 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" href="styles.css">
+  <link href='https://fonts.googleapis.com/css?family=Raleway:600' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="styles.css">
   </head>
   <body>
-    <div class="row">
-      <div id="map" class="col-md-8"></div>
-      <input id="pac-input" type="text" placeholder="Enter a location">
-      <ul id="itinerary-info" class="col-md-3">ITINERARY INFO
+    
+    
+
+
+
+
+
+
+
+    <div class="container splash" >
+      <nav class="navbar navbar-default navbar-fixed-top" style="display: none">
+          <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+              <a class="navbar-brand" href="#">Travel(d)</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav">
+                <!-- Place navbar items here -->
+              </ul>
+            </div>
+        </nav>
+
+
+
+    
+
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       
+      <div class="row" >
+
+        <div id="map" class="col-md-7"></div>
+        <button id="city-button">Click Me To Save City</button>
+        <button id="dummy-button">Click Me To Save Location</button>
+
+        <div class="col-md-3">
+
+        <ul  class="list-holder" id="itinerary-info" >ITINERARY INFO
           <li id="new-location"></li>
-      </ul>
+          <input id="pac-input" type="text" placeholder="Enter a location">
+        </ul>
+
+      </div>
+
+      <div class="col-md-2"></div>
+        
+      </div>
+
+
+
+
+      <div class="row full" style="display: none">
+        <div class="col-md-12 centered">
+          <div id=" centered border">
+            <h1 class="splashpage">Travel(d)</h1>
+          </div>
+        
+
+          <button class="btn btn-default btn-lg">Create Account</button>
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </div>
-    <button id="city-button">Click Me To Save City</button>
-    <button id="dummy-button">Click Me To Save Location</button>
-    <!-- <div id="map-container"> 
-        <p id="location-info">Itinerary Information</p>
-      </div> -->
-      <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="app.js"></script>
   </body>
 </html>
