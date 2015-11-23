@@ -1,0 +1,78 @@
+html, body {
+height: 100%;
+margin: 0;
+padding: 0;
+}
+
+body{
+  margin-top: 40px;
+}
+
+#map-container{
+  margin-top: 50px;
+  margin-right: 0px;
+  height: 70%;
+  width: 80%;
+}
+
+#map {
+    float: left;
+    margin-left: 40px;
+    height: 100%; 
+    width: 50%;
+    background-color: papayawhip;
+}
+
+li{
+  list-style: none;
+
+}
+.controls {
+  margin-top: 10px;
+  border: 1px solid transparent;
+  border-radius: 2px 0 0 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  height: 32px;
+  outline: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+#pac-input {
+  background-color: #fff;
+  margin-left: 10px;
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 300;
+  padding: 0 11px 0 13px;
+  text-overflow: ellipsis;
+  width: 200px;
+}
+
+#itinerary-info{
+  float: right;
+}
+
+#pac-input:focus {
+  border-color: #4d90fe;
+}
+
+.pac-container {
+  font-family: Roboto;
+}
+
+#type-selector {
+  color: #fff;
+  background-color: #4d90fe;
+  padding: 5px 11px 0px 11px;
+}
+
+#type-selector label {
+  font-family: Roboto;
+  font-size: 13px;
+  font-weight: 300;
+}
+
+.row{
+  height: 50%;
+}
