@@ -2,16 +2,17 @@ html, body {
 height: 100%;
 margin: 0;
 padding: 0;
+min-height: 100%;
 }
 
 body{
-  margin-top: 40px;
+  margin-top: 0px;
 }
 
 #map-container{
   margin-top: 50px;
   margin-right: 0px;
-  height: 70%;
+  height: 70px;
   width: 80%;
 }
 
@@ -40,7 +41,6 @@ li{
 
 #pac-input {
   background-color: #fff;
-  margin-left: 10px;
   font-family: Roboto;
   font-size: 15px;
   font-weight: 300;
@@ -75,4 +75,76 @@ li{
 
 .row{
   height: 50%;
+
 }
+
+.container{
+  height: 100%;
+  width: 100%;
+  padding-right: 0;
+  margin-right: 0;
+}
+
+#itinerary-info{
+  text-align: center;
+}
+
+#main-screen{
+  height: 100%;
+}
+
+
+
+.col-centered{
+    margin: 0 auto;
+    float: none;
+}
+
+.btn-default{
+  background-color: BurlyWood;
+  margin: 2%;
+  font-family: 'Raleway', sans-serif;
+}
+
+.centered {
+  text-align: center;
+  display: block;
+  margin:0 auto;
+}
+
+.splashpage{
+
+  font-size: 75px;
+  margin-top: 15%;
+  margin-bottom: 5%;
+}
+
+.splash{
+  background: black;
+  background-image: url("images/2.jpg");
+  background-size: 100%; 
+  background-repeat: no-repeat;
+  
+}
+
+.splash > img{
+  opacity: 0.1;
+}
+
+.border{
+  width: 10%;
+}
+
+.full{
+  height: 100%;
+  width: 100%;
+}
+
+h1{
+  color: white;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+  font-family: 'Raleway', sans-serif;
+}
+
+
+
