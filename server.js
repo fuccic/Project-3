@@ -21,13 +21,13 @@ var Map = require('./models/map');
 
 app.listen(port);
 
-// var place1 = new Place({
+// var map1 = new Map({
 // 	locations: ["test"]
 // });
 
-// place1.save(function(err) {
+// map1.save(function(err) {
 // 	if(err) return handleError(err);
-// 	console.log("saved: " + place1);
+// 	console.log("saved: " + map1);
 // });
 
 //////ROUTES//////

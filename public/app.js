@@ -3,7 +3,7 @@ console.log("Test");
 var markers = [];
 var map;
 var bounds = new google.maps.LatLngBounds();
-
+var currentLocation = [];
 
 $(function() {
 
@@ -12,10 +12,19 @@ $(function() {
 	var $itineraryList = $('#itinerary-info');
 	// console.log($itineraryList);
 	var $dummyButton = $('#dummy-button');
-	console.log($dummyButton);
+	// console.log($dummyButton);
+	var $cityButton = $('#city-button');
+	console.log($cityButton);
 
 	$dummyButton.click(function() {
-		console.log("Save to Mongo");
+		console.log("Save location to Mongo");
+
+	});
+
+	$cityButton.click(function() {
+		console.log("Save map to Mongo");
+		createMap();
+		
 	});
 
 	function initMap() {
@@ -39,22 +48,16 @@ $(function() {
 	    anchorPoint: new google.maps.Point(0, -29)
 	  });
 
-
 	// var searchFunction = function(){
 	  autocomplete.addListener('place_changed', function() {
 	    infowindow.close();
 	    marker.setVisible(false);
 	    var place = autocomplete.getPlace();
-	    	// markers.push(place.id);
-	    	// setMarker();
-	    	// map.fitBounds(bounds);
+	    currentLocation.push(place);
 	    $addLocation = $('<li>');
 	    $addLocation.html(place.name);
 	    $itineraryList.append($addLocation);
 
-	    // console.log(place);
-	    // console.log(place.id);
-	    // console.log(markers);
 
 	     // If the place has a geometry, then present it on a map.
         if (place.geometry.viewport) {
@@ -93,35 +96,34 @@ $(function() {
 	    // }
 
 	    //This displays the infowindow
-	    infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
+	    // infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
 	    infowindow.open(map, marker);
 	  });
+
+	// }
+
+				// console.log('this is ' + place);
+
+	//   var createMap= function() {
+	// 		console.log('ajax to create map');
+	// 		var mapData = {
+	// 			locations: place
+	// 		}
+	// 		$.ajax({
+	// 			url: "http://localhost:3000/",
+	// 			method: "POST",
+	// 			data: mapData
+	// 		}).done();
+	//   }	
 	}
 
-
 	initMap();
+	console.log(currentLocation);
 
 });
 
- 
 
- var newMarker = function(){
-	for(var i = 0; i < markers.length; i++){
-		console.log(markers[i].id)
-		// var position = new google.maps.LatLng(markers[i].getPosition());
-		// console.log(position);
-		// bounds.extend(position);	
-    	var nextMarker = new google.maps.Marker({
-	    	map: map,
-	    	place: {
-	    		placeId: markers[i].place_id,
-	        	location: markers[i].geometry.location
-	      	}
- 		});
- 		// nextMarker.setPosition(markers[i].geometry.location);
-		// nextMarker.setVisible(true);
-	}	
-}
+
 
 
 
