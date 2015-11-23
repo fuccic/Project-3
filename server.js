@@ -39,6 +39,13 @@ app.get('/maps', function(req, res) {
 	});
 });
 
+app.get('/maps/:id', function(req, res) {
+	// console.log(User.find(users));
+	Map.findOne( {_id: req.params.id},function(err, map) {
+		res.send(map);
+	});
+});
+
 app.post('/maps', function(req, res) {
 	// console.log(req.body);
 	var map = new Map(req.body);

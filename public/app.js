@@ -128,14 +128,40 @@ $(function() {
 			method: "POST",
 			data: mapData
 		}).done();
+ 
   }	
 
 	initMap();
 
 });
 
+	var getLocation = function() {
+		console.log('before ajax');
+		$.ajax({
+			url: 'http://localhost:3000/maps/56538b1d7924f8fa1f083383',
+			method: 'GET',
+			dataType: 'json'
+		}).done(renderMarkers);
+	};
 
-
-
-
+	var renderMarkers = function(data) {
+		 var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 2,
+        // maxZoom: 2,
+        // minZoom: 2,
+        // streetViewControl: false,
+        draggable: true,
+        // mapTypeControl: false,
+        center: new google.maps.LatLng(31.639215, -7.982481),
+        // mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+		 
+		for(var i=0;i<data.locations.length;i++) {
+			var marker = new google.maps.Marker ({
+        position: {lat: data.locations[i].lat, lng: data.locations[i].lng},
+        map: map,
+        title: "Maps are cool"
+    });
+	}
+};
 
