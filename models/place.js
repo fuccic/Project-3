@@ -1,9 +1,9 @@
 var mongoose = require('mongoose');
 
-var PlaceSchema = new mongoose.Schema({
+var MapSchema = new mongoose.Schema({
 	locations: []
 });
 
-var Place = mongoose.model('Place', PlaceSchema);
-module.exports = Place;
+var Map = mongoose.model('Map', MapSchema);
+module.exports = Map;
 

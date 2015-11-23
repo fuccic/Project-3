@@ -15,9 +15,9 @@ app.use(express.static('public'));
 
 app.use(morgan('dev'));
 
-mongoose.connect('mongodb://localhost/map_practice');
+mongoose.connect('mongodb://localhost/itineraries');
 
-var Place = require('./models/place');
+var Map = require('./models/map');
 
 app.listen(port);
 
@@ -32,8 +32,8 @@ app.listen(port);
 
 //////ROUTES//////
 
-app.get('/places', function(req, res) {
-	Place.find().then(function(places) {
-		res.send(places);
+app.get('/maps', function(req, res) {
+	Map.find().then(function(maps) {
+		res.send(maps);
 	});
 });
