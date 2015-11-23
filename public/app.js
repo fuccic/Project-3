@@ -1,9 +1,8 @@
 console.log("Test");
 
-var markers = [];
-var map;
-var bounds = new google.maps.LatLngBounds();
-var currentLocation = [];
+// var map;
+// var bounds = new google.maps.LatLngBounds();
+var currentLocation;
 
 $(function() {
 
@@ -53,7 +52,7 @@ $(function() {
 	    infowindow.close();
 	    marker.setVisible(false);
 	    var place = autocomplete.getPlace();
-	    currentLocation.push(place);
+	    currentLocation = place;
 	    $addLocation = $('<li>');
 	    $addLocation.html(place.name);
 	    $itineraryList.append($addLocation);
@@ -96,7 +95,7 @@ $(function() {
 	    // }
 
 	    //This displays the infowindow
-	    // infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
+	    infowindow.setContent('<div><strong>' + place.name + '</strong><br>');
 	    infowindow.open(map, marker);
 	  });
 
@@ -104,21 +103,34 @@ $(function() {
 
 				// console.log('this is ' + place);
 
-	//   var createMap= function() {
-	// 		console.log('ajax to create map');
-	// 		var mapData = {
-	// 			locations: place
-	// 		}
-	// 		$.ajax({
-	// 			url: "http://localhost:3000/",
-	// 			method: "POST",
-	// 			data: mapData
-	// 		}).done();
-	//   }	
 	}
 
+  var createMap = function() {
+  	var name = currentLocation.name;
+  	var lat = currentLocation.geometry.location.lat();
+  	var lng = currentLocation.geometry.location.lng();
+  	var address = currentLocation.formatted_address;
+  	var phoneNumber = currentLocation.formatted_phone_number;
+		var website = currentLocation.website;
+		var placeId = currentLocation.place_id;
+		console.log('ajax to create map');
+		var mapData = {
+			name: name,
+			address: address,
+			lat: lat,
+			lng: lng,
+			phone: phoneNumber,
+			website: website,
+			place_id: placeId 
+		}
+		$.ajax({
+			url: "http://localhost:3000/maps",
+			method: "POST",
+			data: mapData
+		}).done();
+  }	
+
 	initMap();
-	console.log(currentLocation);
 
 });
 

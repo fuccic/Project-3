@@ -18,6 +18,7 @@ app.use(morgan('dev'));
 mongoose.connect('mongodb://localhost/itineraries');
 
 var Map = require('./models/map');
+var Place = require('./models/place');
 
 app.listen(port);
 
@@ -37,3 +38,21 @@ app.get('/maps', function(req, res) {
 		res.send(maps);
 	});
 });
+
+app.post('/maps', function(req, res) {
+	// console.log(req.body);
+	var map = new Map(req.body);
+	map.locations.push(req.body);
+	map.save(function(err) {
+		if(err) {
+			console.log(err);
+		} else {
+			res.send(map)
+		}
+	});
+});
+
+
+
+
+
