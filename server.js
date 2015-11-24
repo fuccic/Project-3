@@ -108,12 +108,13 @@ app.post('/users', function(req, res){
 
 
 app.post('/users/login', function(req, res){
-
+  console.log(req.body.username)
+  console.log(req.body.password_hash)
 	var username = req.body.username;
-    var password = md5(req.body.password_hash);
+  var password_hash = md5(req.body.password_hash);
 
     User.findOne({'username' : username}).exec(function(err, user){
-        if (username != null && user.password_hash === password) {
+        if (username != null && user.password_hash === password_hash) {
         	console.log(user.id);
             res.cookie("loggedinId", user.id);
             console.log('Worked');

@@ -28,36 +28,7 @@ $(function() {
 		
 	});
 
-	var $signupButton = $('#signup-button');
-
-	$signupButton.click(function(){
-		console.log("Signup button works");
-		signUpForm();
-	});
-
-	var $signinButton = $('#signin-button');
-
-	$signinButton.click(function(){
-		console.log("Signin button works");
-		showSignIn();
-	});
-
-	var $logoutButton = $('#logout');
-
-	$logoutButton.click(function(){
-		Cookies.remove('loggedinId');
-		$('#front-page').show();
-		$('#user-page').toggle();
-	});
-
-	if(Cookies.get('loggedinId') === undefined){
-		showSplashPage();
-	}else{
-		userShow();
-	};
-});
-
-function initMap() {
+	function initMap() {
 	  var map = new google.maps.Map(document.getElementById('map'), {
 	    center: {lat: 0, lng: 0},
 	    zoom: 1
@@ -129,6 +100,7 @@ function initMap() {
 	    infowindow.setContent('<div><strong>' + place.name + '</strong><br>');
 	    infowindow.open(map, marker);
 	  });
+
 	// }
 
 				// console.log('this is ' + place);
@@ -161,124 +133,191 @@ function initMap() {
  
   }	
 
+	initMap();
 
 
 
-	var getLocation = function() {
-		console.log('before ajax');
-		$.ajax({
-			url: 'http://localhost:3000/maps/5653a5bed8166ca786af8ade',
-			method: 'GET',
-			dataType: 'json'
-		}).done(renderMarkers);
-	};
+	var $signupButton = $('#signup-button');
 
-	var renderMarkers = function(data) {
-		 var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 10,
-        // maxZoom: 2,
-        // minZoom: 2,
-        // streetViewControl: false,
-        draggable: true,
-        // mapTypeControl: false,
-        center: new google.maps.LatLng(31.639215, -7.982481),
-        // mapTypeId: google.maps.MapTypeId.ROADMAP
-    });
+	$signupButton.click(function(){
+		console.log("sdoufjha");
+		signUpForm();
+	});
 
-		for(var i=0;i<data.locations.length;i++) {
-			var marker = new google.maps.Marker ({
-		        position: {lat: data.locations[i].lat, lng: data.locations[i].lng},
-		        map: map,
-		        title: "Maps are cool"
-    		});
-		}
-	};
-	
+	var $signinButton = $('#signin-button');
 
-	var signUpForm = function(){
-		var formDiv = $('#form-container');
-		$('#signup-button').remove();
-		$('#signin-button').remove();
-		var source = $('#user-signup-template').html();
-		var template = Handlebars.compile(source);
-		formDiv.append(template());
-		$('#new-user-submit').click(function(){
-			// console.log('no secrets')
+	$signinButton.click(function(){
+		console.log("yoyoyo");
+		showSignIn();
+	});
 
-			createUser();
-		});
-	};
+	var $logoutButton = $('#logout');
 
-	var createUser = function(){
-		var formDiv = $('#form-container');
-		var username = $('#username-field').val();
-		var password = $('#password-field').val();
-		var userData = {
-			username: username,
-			password_hash: password
-		};
-		$.ajax({
-			url: "http://localhost:3000/users",
-			method: "POST",
-			data: userData
-		}).done(userShow())
-	};
+	$logoutButton.click(function(){
+		Cookies.remove('loggedinId');
+		$('#front-page').show();
+		$('#user-page').toggle();
+	});
 
-	var userShow = function(data){
-		initMap();
-		var frontPage = $("#front-page");
-		var userPage = $("#user-page");
-		frontPage.hide();
-		userPage.toggle();
-		user = Cookies.get('loggedinId');
-
+	if(Cookies.get('loggedinId') === undefined){
+		showSplashPage();
+	}else{
+		userShow();
 	}
 
+});
 
-	var showSignIn = function(){
-		var formDiv = $('#form-container');
-		var source = $('#user-signin-template').html();
-		var template = Handlebars.compile(source);
+var getLocation = function() {
+console.log('before ajax');
+$.ajax({
+	url: 'http://localhost:3000/maps/5653a5bed8166ca786af8ade',
+	method: 'GET',
+	dataType: 'json'
+}).done(renderMarkers);
+};
 
-		$('#signup-button').remove();
+var renderMarkers = function(data) {
+ var map = new google.maps.Map(document.getElementById('map'), {
 
-		$('#signin-button').remove();
+zoom: 10,
+// maxZoom: 2,
+// minZoom: 2,
+// streetViewControl: false,
+draggable: true,
+// mapTypeControl: false,
+center: new google.maps.LatLng(51.532580, -0.130475)
+// mapTypeId: google.maps.MapTypeId.ROADMAP
+});
+	  var input = document.getElementById('pac-input');
 
-		formDiv.append(template());
+	  var autocomplete = new google.maps.places.Autocomplete(input);
+	  autocomplete.bindTo('bounds', map);
 
-		$('.signin-submit').click(function(){
-			console.log('lol');
-			$('#username').val('');
-			$('#password').val('');
-			signinSubmit();
-		})
-	};
+	  var marker = new google.maps.Marker({
+	    map: map,
+	    anchorPoint: new google.maps.Point(0, -29)
+	  });
 
-	var signinSubmit = function(){
-		var usernameInput = $("#username").val()
+	  autocomplete.addListener('place_changed', function() {
 
-		var passwordInput = $("#password").val()
-
-		var user = {
-			username: usernameInput,
-			password_hash: passwordInput
-		};
-
-		$.ajax({
-			url: 'http://localhost:3000/users/login',
-			method: 'POST',
-			data: user,
-		}).done(userShow());
-	};
-
-	var showSplashPage = function(){
-		var formDiv = $('#form-container');
-
-	}
-
-
+	 
+	    marker.setVisible(false);
+	    var place = autocomplete.getPlace();
+	    currentLocation = place;
+	    $addLocation = $('<li>');
+	    $addLocation.html(place.name);
+        if (place.geometry.viewport) {
+          map.fitBounds(place.geometry.viewport);
+        } else {
+          map.setCenter(place.geometry.location);
+        }
 
 
+	    marker.setPosition(place.geometry.location);
+	    marker.setVisible(true);
+	  });
+
+var data = [
+	[51.503454, -0.119562],
+	[51.499633,-0.124755]
+]
+
+for(var i=0;i<data.length;i++) {
+	var marker = new google.maps.Marker ({
+        position: {lat: data[i][0], lng: data[i][1]},
+        map: map,
+        title: "Maps are cool"
+	});
+}
+};
+
+
+var signUpForm = function(){
+var formDiv = $('#form-container');
+$('#signup-button').remove();
+$('#signin-button').remove();
+var source = $('#user-signup-template').html();
+var template = Handlebars.compile(source);
+formDiv.append(template());
+$('#new-user-submit').click(function(){
+	// console.log('no secrets')
+
+	createUser();
+});
+};
+
+var createUser = function(){
+var formDiv = $('#form-container');
+var username = $('#username-field').val();
+var password = $('#password-field').val();
+var userData = {
+	username: username,
+	password_hash: password
+};
+$.ajax({
+	url: "http://localhost:3000/users",
+	method: "POST",
+	data: userData
+}).done(userShow())
+};
+
+var userShow = function(data){
+var frontPage = $("#front-page");
+var userPage = $("#user-page");
+frontPage.hide();
+userPage.toggle();
+
+user = Cookies.get('loggedinId');
+
+}
+
+
+var showSignIn = function(){
+var formDiv = $('#form-container');
+var source = $('#user-signin-template').html();
+var template = Handlebars.compile(source);
+
+$('#signup-button').hide();
+
+$('#signin-button').hide();
+
+formDiv.append(template());
+
+$('.signin-submit').click(function(){
+	console.log('lol');
+	signinSubmit();
+	$('#username').val('');
+	$('#password').val('');
+
+})
+};
+
+var signinSubmit = function(){
+var usernameInput = $("#username").val()
+
+var passwordInput = $("#password").val()
+
+var user = {
+	username: usernameInput,
+	password_hash: passwordInput
+};
+
+$.ajax({
+	url: 'http://localhost:3000/users/login',
+	method: 'POST',
+	data: user,
+}).done(userShow());
+};
+
+
+var showSplashPage = function(){
+	// var formDiv = $('#form-container');
+
+		$('#signup-button').show();
+		$('#signin-button').show();
+
+	// formDiv.append(template());
+}
 
 
 
