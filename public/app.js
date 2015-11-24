@@ -28,7 +28,36 @@ $(function() {
 		
 	});
 
-	function initMap() {
+	var $signupButton = $('#signup-button');
+
+	$signupButton.click(function(){
+		console.log("Signup button works");
+		signUpForm();
+	});
+
+	var $signinButton = $('#signin-button');
+
+	$signinButton.click(function(){
+		console.log("Signin button works");
+		showSignIn();
+	});
+
+	var $logoutButton = $('#logout');
+
+	$logoutButton.click(function(){
+		Cookies.remove('loggedinId');
+		$('#front-page').show();
+		$('#user-page').toggle();
+	});
+
+	if(Cookies.get('loggedinId') === undefined){
+		showSplashPage();
+	}else{
+		userShow();
+	};
+});
+
+function initMap() {
 	  var map = new google.maps.Map(document.getElementById('map'), {
 	    center: {lat: 0, lng: 0},
 	    zoom: 1
@@ -100,7 +129,6 @@ $(function() {
 	    infowindow.setContent('<div><strong>' + place.name + '</strong><br>');
 	    infowindow.open(map, marker);
 	  });
-
 	// }
 
 				// console.log('this is ' + place);
@@ -133,39 +161,8 @@ $(function() {
  
   }	
 
-	initMap();
 
 
-
-	var $signupButton = $('#signup-button');
-
-	$signupButton.click(function(){
-		console.log("sdoufjha");
-		signUpForm();
-	});
-
-	var $signinButton = $('#signin-button');
-
-	$signinButton.click(function(){
-		console.log("yoyoyo");
-		showSignIn();
-	});
-
-	var $logoutButton = $('#logout');
-
-	$logoutButton.click(function(){
-		Cookies.remove('loggedinId');
-		$('#front-page').show();
-		$('#user-page').toggle();
-	});
-
-	if(Cookies.get('loggedinId') === undefined){
-		showSignIn();
-	}else{
-		userShow();
-	}
-
-});
 
 	var getLocation = function() {
 		console.log('before ajax');
@@ -228,11 +225,11 @@ $(function() {
 	};
 
 	var userShow = function(data){
+		initMap();
 		var frontPage = $("#front-page");
 		var userPage = $("#user-page");
 		frontPage.hide();
 		userPage.toggle();
-
 		user = Cookies.get('loggedinId');
 
 	}
@@ -251,10 +248,9 @@ $(function() {
 
 		$('.signin-submit').click(function(){
 			console.log('lol');
-			signinSubmit();
 			$('#username').val('');
 			$('#password').val('');
-
+			signinSubmit();
 		})
 	};
 
@@ -275,7 +271,10 @@ $(function() {
 		}).done(userShow());
 	};
 
+	var showSplashPage = function(){
+		var formDiv = $('#form-container');
 
+	}
 
 
 
