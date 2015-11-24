@@ -133,12 +133,21 @@ $(function() {
 
 	initMap();
 
+
+
+	var $signupButton = $('#signup-button');
+
+	$signupButton.click(function(){
+		console.log("sdoufjha");
+		signUpForm();
+	});
+
 });
 
 	var getLocation = function() {
 		console.log('before ajax');
 		$.ajax({
-			url: 'http://localhost:3000/maps/5653a0897aa28f472885d650',
+			url: 'http://localhost:3000/maps/5653a5bed8166ca786af8ade',
 			method: 'GET',
 			dataType: 'json'
 		}).done(renderMarkers);
@@ -158,11 +167,56 @@ $(function() {
 
 		for(var i=0;i<data.locations.length;i++) {
 			var marker = new google.maps.Marker ({
-        position: {lat: data.locations[i].lat, lng: data.locations[i].lng},
-        map: map,
-        title: "Maps are cool"
-    });
-	}
-};
+		        position: {lat: data.locations[i].lat, lng: data.locations[i].lng},
+		        map: map,
+		        title: "Maps are cool"
+    		});
+		}
+	};
+	
+
+	var signUpForm = function(){
+		var formDiv = $('#form-container');
+		$('#signup-button').remove();
+		var source = $('#user-signup-template').html();
+		var template = Handlebars.compile(source);
+		formDiv.append(template());
+		$('#new-user-submit').click(function(){
+			console.log('no secrets')
+
+			createUser();
+		});
+	};
+
+	var createUser = function(){
+		var formDiv = $('#form-container');
+		var username = $('#username-field').val();
+		var password = $('#password-field').val();
+		var userData = {
+			username: username,
+			password_hash: password
+		};
+		$.ajax({
+			url: "http://localhost:3000/users",
+			method: "POST",
+			data: userData
+		}).done()
+	};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

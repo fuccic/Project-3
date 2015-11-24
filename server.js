@@ -2,7 +2,9 @@ var express      = require('express'),
     mongoose     = require('mongoose'),
     bodyParser   = require('body-parser'),
     nodeDebugger = require('node-debugger'),
-    morgan 		 = require('morgan');
+    morgan 		 = require('morgan'),
+    md5          = require('md5'),
+    cookieParser = require('cookie-parser');
 
 var port         = process.env.PORT || 3000;
 var app          = express();
@@ -15,10 +17,13 @@ app.use(express.static('public'));
 
 app.use(morgan('dev'));
 
+app.use(cookieParser());
+
 mongoose.connect('mongodb://localhost/itineraries');
 
 var Map = require('./models/map');
 var Place = require('./models/place');
+var User = require('./models/user');
 
 app.listen(port);
 
@@ -30,6 +35,18 @@ app.listen(port);
 // 	if(err) return handleError(err);
 // 	console.log("saved: " + map1);
 // });
+
+
+// var user1 = new User({
+// 	username: "test",
+// 	password_hash: "qwerty"
+// });
+
+// user1.save(function(err) {
+// 	if(err) return handleError(err);
+// 	console.log("saved: " + user1);
+// });
+
 
 //////ROUTES//////
 
@@ -57,6 +74,36 @@ app.post('/maps', function(req, res) {
 			res.send(map)
 		}
 	});
+});
+
+app.get('/users', function(req, res){
+	User.find().then(function(users){
+		res.send(users);
+	})
+});
+
+app.post('/users', function(req, res){
+	password_hash = md5(req.body.password);
+
+  	var user = new User({
+    	username: req.body.username,
+    	password_hash: password_hash,
+  	});
+
+  	user.save(function(err) {
+    	if (err){
+    	console.log(err);
+    	res.statusCode = 503;
+		}else{
+
+      console.log(user.username + ' created!');
+
+      //set the cookie!
+      res.cookie("loggedinId", user.id);
+
+      res.send(user)
+      	};  
+  	});
 });
 
 
