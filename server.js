@@ -83,11 +83,11 @@ app.get('/users', function(req, res){
 });
 
 app.post('/users', function(req, res){
-	password_hash = md5(req.body.password);
+	password_hash = md5(req.body.password_hash);
 
   	var user = new User({
     	username: req.body.username,
-    	password_hash: password_hash,
+    	password_hash: password_hash
   	});
 
   	user.save(function(err) {
@@ -107,6 +107,21 @@ app.post('/users', function(req, res){
 });
 
 
+app.post('/users/login', function(req, res){
+
+	var username = req.body.username;
+    var password = md5(req.body.password_hash);
+
+    User.findOne({'username' : username}).exec(function(err, user){
+        if (username != null && user.password_hash === password) {
+            res.cookie("loggedinId", user.id);
+            console.log('Worked')
+        }
+        else {
+        	console.log('failed')
+        };
+    });
+});
 
 
 

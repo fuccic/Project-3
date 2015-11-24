@@ -1,5 +1,7 @@
 console.log("Test");
 
+var user = null;
+
 // var map;
 // var bounds = new google.maps.LatLngBounds();
 var currentLocation;
@@ -142,6 +144,13 @@ $(function() {
 		signUpForm();
 	});
 
+	var $signinButton = $('#signin-button');
+
+	$signinButton.click(function(){
+		console.log("yoyoyo");
+		showSignIn();
+	});
+
 });
 
 	var getLocation = function() {
@@ -178,6 +187,7 @@ $(function() {
 	var signUpForm = function(){
 		var formDiv = $('#form-container');
 		$('#signup-button').remove();
+		$('#signin-button').remove();
 		var source = $('#user-signup-template').html();
 		var template = Handlebars.compile(source);
 		formDiv.append(template());
@@ -200,12 +210,53 @@ $(function() {
 			url: "http://localhost:3000/users",
 			method: "POST",
 			data: userData
-		}).done()
+		}).done(userShow())
 	};
 
+	var userShow = function(data){
+		var frontPage = $("#front-page");
+		var userPage = $("#user-page");
+		frontPage.remove();
+		userPage.toggle();
+
+		user = Cookies.get('loggedinId');
+
+	}
 
 
+	var showSignIn = function(){
+		var formDiv = $('#form-container');
+		var source = $('#user-signin-template').html();
+		var template = Handlebars.compile(source);
 
+		$('#signup-button').remove();
+
+		$('#signin-button').remove();
+
+		formDiv.append(template());
+
+		$('.signin-submit').click(function(){
+			console.log('lol');
+			signinSubmit();
+		})
+	};
+
+	var signinSubmit = function(){
+		var usernameInput = $("#username").val()
+
+		var passwordInput = $("#password").val()
+
+		var user = {
+			username: usernameInput,
+			password_hash: passwordInput
+		};
+
+		$.ajax({
+			url: 'http://localhost:3000/users/login',
+			method: 'POST',
+			data: user,
+		}).done(userShow());
+	};
 
 
 
