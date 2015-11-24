@@ -105,9 +105,9 @@ $(function() {
 
 				// console.log('this is ' + place);
 
-	}
+	}	
 
-  var createMap = function() {
+  var createPlace = function() {
   	var name = currentLocation.name;
   	var lat = currentLocation.geometry.location.lat();
   	var lng = currentLocation.geometry.location.lng();
@@ -124,6 +124,24 @@ $(function() {
 			phone: phoneNumber,
 			website: website,
 			place_id: placeId 
+		}
+		$.ajax({
+			url: "http://localhost:3000/maps/place",
+			method: "POST",
+			data: mapData
+		}).done();
+ 
+  }	
+
+  var createMap = function() {
+  	var name = $('#name-input').val();
+  	var lat = currentLocation.geometry.location.lat();
+  	var lng = currentLocation.geometry.location.lng();
+	console.log('ajax to create map');
+		var mapData = {
+			name: name,
+			city_lat: lat,
+			city_lng: lng 
 		}
 		$.ajax({
 			url: "http://localhost:3000/maps",
@@ -170,13 +188,14 @@ $(function() {
 var getLocation = function() {
 console.log('before ajax');
 $.ajax({
-	url: 'http://localhost:3000/maps/5653a5bed8166ca786af8ade',
+	url: 'http://localhost:3000/maps/5654d39ca57836f5127b557a',
 	method: 'GET',
 	dataType: 'json'
 }).done(renderMarkers);
 };
 
 var renderMarkers = function(data) {
+	console.log(data);
  var map = new google.maps.Map(document.getElementById('map'), {
 
 zoom: 10,
@@ -185,7 +204,7 @@ zoom: 10,
 // streetViewControl: false,
 draggable: true,
 // mapTypeControl: false,
-center: new google.maps.LatLng(51.532580, -0.130475)
+center: new google.maps.LatLng(data.city_lat, data.city_lng)
 // mapTypeId: google.maps.MapTypeId.ROADMAP
 });
 	  var input = document.getElementById('pac-input');
@@ -217,14 +236,15 @@ center: new google.maps.LatLng(51.532580, -0.130475)
 	    marker.setVisible(true);
 	  });
 
-var data = [
-	[51.503454, -0.119562],
-	[51.499633,-0.124755]
-]
+// var data = [
+// 	// [51.503454, -0.119562],
+// 	// [51.499633,-0.124755]
 
-for(var i=0;i<data.length;i++) {
+// ]
+
+for(var i=0;i<data.locations.length;i++) {
 	var marker = new google.maps.Marker ({
-        position: {lat: data[i][0], lng: data[i][1]},
+        position: {lat: data.locations[i].lat, lng: data.locations[i].lng},
         map: map,
         title: "Maps are cool"
 	});
