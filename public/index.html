@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Place Autocomplete</title>
+    <title>Travel(d)</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">	
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
@@ -58,7 +58,7 @@
 
        
       <div class="row" id="user-page" style="display: none">
-
+        <button id="logout">Logout</button>
         <div id="map" class="col-md-7"></div>
         <button id="city-button">Click Me To Save City</button>
         <button id="dummy-button">Click Me To Save Location</button>
@@ -83,7 +83,7 @@
 
 
 
-      <div class="row full" id="front-page">
+      <div class="row full" id="front-page" style="display: block">
         <div class="col-md-12 centered">
           <div id=" centered border">
             <h1 class="splashpage">Travel(d)</h1>
@@ -105,7 +105,7 @@
               <label>Username</label>
               <input type="text" id="username-field"><br>
               <label>Password</label>
-              <input type="text" id="password-field"><br>
+              <input type="password" id="password-field"><br>
               <button id='new-user-submit'>Submit</button>
             </div>
           </template>
@@ -114,7 +114,7 @@
         <template id='user-signin-template'>
           <div>
             <input id='username' placeholder='Username'>
-            <input id='password' placeholder='Password'>
+            <input type='password' id='password' placeholder='Password'>
             <button class='signin-submit'>Sign In</button>
           </div>
         </template>

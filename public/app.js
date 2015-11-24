@@ -151,6 +151,20 @@ $(function() {
 		showSignIn();
 	});
 
+	var $logoutButton = $('#logout');
+
+	$logoutButton.click(function(){
+		Cookies.remove('loggedinId');
+		$('#front-page').show();
+		$('#user-page').toggle();
+	});
+
+	if(Cookies.get('loggedinId') === undefined){
+		showSignIn();
+	}else{
+		userShow();
+	}
+
 });
 
 	var getLocation = function() {
@@ -192,7 +206,7 @@ $(function() {
 		var template = Handlebars.compile(source);
 		formDiv.append(template());
 		$('#new-user-submit').click(function(){
-			console.log('no secrets')
+			// console.log('no secrets')
 
 			createUser();
 		});
@@ -216,7 +230,7 @@ $(function() {
 	var userShow = function(data){
 		var frontPage = $("#front-page");
 		var userPage = $("#user-page");
-		frontPage.remove();
+		frontPage.hide();
 		userPage.toggle();
 
 		user = Cookies.get('loggedinId');
@@ -238,6 +252,9 @@ $(function() {
 		$('.signin-submit').click(function(){
 			console.log('lol');
 			signinSubmit();
+			$('#username').val('');
+			$('#password').val('');
+
 		})
 	};
 

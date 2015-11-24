@@ -114,8 +114,10 @@ app.post('/users/login', function(req, res){
 
     User.findOne({'username' : username}).exec(function(err, user){
         if (username != null && user.password_hash === password) {
+        	console.log(user.id);
             res.cookie("loggedinId", user.id);
-            console.log('Worked')
+            console.log('Worked');
+            res.send(user);
         }
         else {
         	console.log('failed')
