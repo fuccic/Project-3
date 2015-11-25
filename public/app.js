@@ -162,7 +162,7 @@ $(function() {
   }	
 
 	initMap();
-
+  
 
 
 	var $signupButton = $('#signup-button');
@@ -193,7 +193,37 @@ $(function() {
 		userShow();
 	}
 
-});
+	var $dropdownButton = $('#dropdown-button');
+	console.log($dropdownButton);
+
+	$dropdownButton.click(function(){
+		getItineraries();
+	});
+
+});////////END OF WINDOW ONLOAD
+var $userItineraryList = $('#user-itineraries');
+// console.log($userItineraryList);
+
+ var getItineraries = function(){
+  	$.ajax({
+		url: 'http://localhost:3000/users/itineraries',
+		method: 'GET',
+		dataType: 'json'
+	}).done(populateItineraries);
+  };
+
+ var populateItineraries = function(data){
+ 	$userItineraryList.empty();
+ 	for(var i = 0; i<data.length; i++){
+ 		var $locationItem = $('<li>');
+ 		var $locationLink = $('<a href="#"></a>')
+ 		$locationLink.html(data[i]);
+ 		$locationItem.append($locationLink);
+ 		// console.log(data[i]);
+ 		$userItineraryList.append($locationItem);
+
+ 	};
+ };
 
 var getLocation = function() {
 console.log('before ajax');

@@ -86,6 +86,18 @@ app.get('/maps/:id', function(req, res) {
 	});
 });
 
+app.get('/users/itineraries', function(req, res){
+ var currentUser = req.cookies.loggedinId;
+ var locationList = []
+ User.findOne({'_id' : currentUser}, 'itineraries', function(err, user){
+    for(var i = 0; i<user.itineraries.length;i++){
+      var currentLocationName = user.itineraries[i].name
+      locationList.push(currentLocationName)
+    };
+  res.send(locationList);
+  });
+});
+
 app.post('/maps/place', function(req, res) {
 	console.log(req.body);
 	var name = req.body.name;

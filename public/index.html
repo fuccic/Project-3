@@ -35,6 +35,14 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
+          <div class="dropdown">
+            <button id="dropdown-button" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+              Itineraries
+              <span class="caret"></span>
+            </button>
+            <ul id="user-itineraries" class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            </ul>
+          </div>
             <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">New Itinerary
             </button>
             <a href="#" class="btn" id="logout">Logout</a>
