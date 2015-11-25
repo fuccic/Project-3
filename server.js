@@ -88,8 +88,26 @@ app.get('/maps/:id', function(req, res) {
 
 app.post('/maps/place', function(req, res) {
 	// console.log(req.body);
-	var map = new Map(req.body);
-	map.locations.push(req.body);
+	var name = req.body.name;
+  var lat = req.body.lat;
+  var lng = req.body.lng;
+  var address = req.body.address;
+  var phoneNumber = req.body.phone;
+  var website = req.body.website;
+  var placeId = req.body.place_id;
+
+  var currentUser = req.cookies.loggedinId;
+
+  var place = new Place({
+    name: name,
+    lat: lat,
+    lng: lng,
+    address: formatted_address,
+    phoneNumber: formatted_phone_number,
+    website: website,
+    placeId: place_id
+  });
+
 	map.save(function(err) {
 		if(err) {
 			console.log(err);

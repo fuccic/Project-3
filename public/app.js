@@ -113,9 +113,9 @@ $(function() {
   	var lng = currentLocation.geometry.location.lng();
   	var address = currentLocation.formatted_address;
   	var phoneNumber = currentLocation.formatted_phone_number;
-		var website = currentLocation.website;
-		var placeId = currentLocation.place_id;
-		console.log('ajax to create map');
+	var website = currentLocation.website;
+	var placeId = currentLocation.place_id;
+	console.log('ajax to create map');
 		var mapData = {
 			name: name,
 			address: address,
