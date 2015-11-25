@@ -228,14 +228,14 @@ var $userItineraryList = $('#user-itineraries');
 var getLocation = function() {
 console.log('before ajax');
 $.ajax({
-	url: 'http://localhost:3000/maps/5654d39ca57836f5127b557a',
+	url: 'http://localhost:3000/maps/populate',
 	method: 'GET',
 	dataType: 'json'
 }).done(renderMarkers);
 };
 
 var renderMarkers = function(data) {
-	console.log(data);
+ console.log(data);
  var map = new google.maps.Map(document.getElementById('map'), {
 
 zoom: 10,
@@ -244,7 +244,8 @@ zoom: 10,
 // streetViewControl: false,
 draggable: true,
 // mapTypeControl: false,
-center: new google.maps.LatLng(data.city_lat, data.city_lng)
+center: {lat: 0, lng: 0},
+ // center: new google.maps.LatLng(data.city_lat, data.city_lng)
 // mapTypeId: google.maps.MapTypeId.ROADMAP
 });
 	  var input = document.getElementById('pac-input');
@@ -282,9 +283,10 @@ center: new google.maps.LatLng(data.city_lat, data.city_lng)
 
 // ]
 
-for(var i=0;i<data.locations.length;i++) {
+for(var i=0;i<data.length;i++) {
+	console.log(data[i]);
 	var marker = new google.maps.Marker ({
-        position: {lat: data.locations[i].lat, lng: data.locations[i].lng},
+        position: {lat: data[i].lat, lng: data[i].lng},
         map: map,
         title: "Maps are cool"
 	});

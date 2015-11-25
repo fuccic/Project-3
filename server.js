@@ -79,11 +79,21 @@ app.get('/maps', function(req, res) {
 	});
 });
 
-app.get('/maps/:id', function(req, res) {
+app.get('/maps/populate', function(req, res) {
 	// console.log(User.find(users));
-	Map.findOne( {_id: req.params.id},function(err, map) {
-		res.send(map);
-	});
+	 var currentUser = req.cookies.loggedinId;
+   var popArray = [];
+   User.findOne({'_id' : currentUser}, 'itineraries', function(err, user){
+      for(var i = 0; i<user.itineraries.length;i++){
+        for(var x = 0; x<user.itineraries[i].locations.length; x++){
+          if(user.itineraries[i].name === "Trip To Sydney"){
+            popArray.push(user.itineraries[i].locations[x]);
+            // res.send(user.itineraries[i].locations[x]);
+          };
+        };
+      };
+      res.send(popArray);
+    });
 });
 
 app.get('/users/itineraries', function(req, res){
@@ -124,7 +134,6 @@ app.post('/maps/place', function(req, res) {
 //   if (err) return handleError(err);
 //   console.log('%s %s is a %s.', person.name.first, person.name.last, person.occupation) // Space Ghost is a talk show host.
 // })
-
 
  User.findOne({'_id' : currentUser}, 'itineraries', function(err, user){
       for(var i = 0; i<user.itineraries.length;i++){
