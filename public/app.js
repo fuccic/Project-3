@@ -12,15 +12,19 @@ $(function() {
 	// console.log($newLocation);
 	var $itineraryList = $('#itinerary-info');
 	// console.log($itineraryList);
-	var $dummyButton = $('#dummy-button');
+	// var $dummyButton = $('#dummy-button');
 	// console.log($dummyButton);
 	var $cityButton = $('#city-button');
 	console.log($cityButton);
 
-	$dummyButton.click(function() {
-		console.log("Save location to Mongo");
+	var $saveLocationButton = $('#save-location');
+	console.log($saveLocationButton);
 
-	});
+
+	// $dummyButton.click(function() {
+	// 	console.log("Save location to Mongo");
+
+	// });
 
 	$cityButton.click(function() {
 		console.log("Save map to Mongo");
@@ -106,6 +110,12 @@ $(function() {
 				// console.log('this is ' + place);
 
 	}	
+
+  $saveLocationButton.click(function() {
+		console.log("Save place to Mongo");
+		createPlace();
+		
+	});
 
   var createPlace = function() {
   	var name = currentLocation.name;
