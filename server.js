@@ -48,9 +48,15 @@ app.listen(port);
 //   place_id: String}]
 // });
 
-// map1.save(function(err) {
+// var map = new Map({
+//     name: "Trip to Sydney",
+//     city_lat: 40.707250,
+//     city_lng: -74.003492
+//   }); 
+
+// map.save(function(err) {
 // 	if(err) return handleError(err);
-// 	console.log("saved: " + map1);
+// 	console.log("saved: " + map);
 // });
 
 
