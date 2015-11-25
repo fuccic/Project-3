@@ -87,7 +87,7 @@ app.get('/maps/:id', function(req, res) {
 });
 
 app.post('/maps/place', function(req, res) {
-	// console.log(req.body);
+	console.log(req.body);
 	var name = req.body.name;
   var lat = req.body.lat;
   var lng = req.body.lng;
@@ -117,19 +117,18 @@ app.post('/maps/place', function(req, res) {
  User.findOne({'_id' : currentUser}, 'itineraries', function(err, user){
       for(var i = 0; i<user.itineraries.length;i++){
         if(user.itineraries[i].name === "Trip To Sydney"){
-        console.log(user.itineraries[i].locations);
-        // console.log(typeof user.itineraries[i]);
+          console.log(user.itineraries[i].locations);
+          user.itineraries[i].locations.push(place);
+          user.save(function(err) {
+              if(err) {
+                console.log(err);
+              } else {
+                res.send(user)
+              }
+          });
         }else{
         console.log("Not right");
-        }
-        // user.itineraries.push(map);
-        // user.save(function(err) {
-        //     if(err) {
-        //       console.log(err);
-        //     } else {
-        //       res.send(user)
-        //     }
-        // });
+        };
      };
   });
 });
