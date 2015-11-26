@@ -57,9 +57,31 @@ li{
   border-color: #4d90fe;
 }
 
+#name-input{
+  background-color: #fff;
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 300;
+  margin-top: 4px;
+}
+
 .pac-container {
   font-family: Roboto;
+  background-color: #FFF;
+  z-index: 20;
+  position: fixed;
+  display: inline-block;
+  float: left;
 }
+.modal{
+    z-index: 20; 
+    top:5%;
+    left:50%;
+    outline: none; 
+}
+.modal-backdrop{
+    z-index: 10;        
+}​
 
 #type-selector {
   color: #fff;
@@ -78,6 +100,10 @@ li{
 
 }
 
+label{
+  color: #fff;
+}
+
 .container{
   height: 100%;
   width: 100%;
@@ -92,8 +118,6 @@ li{
 #main-screen{
   height: 100%;
 }
-
-
 
 .col-centered{
     margin: 0 auto;
@@ -127,6 +151,10 @@ li{
   
 }
 
+#signin-button{
+  margin-top: 10px;
+}
+
 .splash > img{
   opacity: 0.1;
 }
@@ -146,5 +174,10 @@ h1{
   font-family: 'Raleway', sans-serif;
 }
 
+#user-page{
+
+  margin-top: ;
+
+}
 
 
