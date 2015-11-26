@@ -160,7 +160,7 @@ $(function() {
 	});
 
 	if(Cookies.get('loggedinId') === undefined){
-		showSignIn();
+		showSplash();
 	}else{
 		userShow();
 	}
@@ -170,11 +170,18 @@ $(function() {
 	var getLocation = function() {
 		console.log('before ajax');
 		$.ajax({
-			url: 'http://localhost:3000/maps/5653a5bed8166ca786af8ade',
+			url: 'http://localhost:3000/maps/5654b4036a899e3992b147ff',
 			method: 'GET',
 			dataType: 'json'
 		}).done(renderMarkers);
 	};
+
+	var crap = function() {
+		data = {
+			places: []
+		}
+		renderMarkers(data);
+	}
 
 	var renderMarkers = function(data) {
 		 var map = new google.maps.Map(document.getElementById('map'), {
@@ -200,8 +207,8 @@ $(function() {
 
 	var signUpForm = function(){
 		var formDiv = $('#form-container');
-		$('#signup-button').remove();
-		$('#signin-button').remove();
+		$('#signup-button').hide();
+		$('#signin-button').hdie();
 		var source = $('#user-signup-template').html();
 		var template = Handlebars.compile(source);
 		formDiv.append(template());
@@ -243,9 +250,9 @@ $(function() {
 		var source = $('#user-signin-template').html();
 		var template = Handlebars.compile(source);
 
-		$('#signup-button').remove();
+		$('#signup-button').hide();
 
-		$('#signin-button').remove();
+		$('#signin-button').hide();
 
 		formDiv.append(template());
 
@@ -275,6 +282,11 @@ $(function() {
 		}).done(userShow());
 	};
 
+	var showSplash = function(){
+		$('#signup-button').show();
+
+		$('#signin-button').show();
+	};
 
 
 
