@@ -1,5 +1,5 @@
 console.log("Test");
-
+var currentItinerary;
 var user = null;
 
 // var map;
@@ -34,6 +34,9 @@ $(function() {
 
 	var $closeButton = $('#close-button');
 
+	var $nameInput = $('#name-input');
+	console.log($nameInput);
+
 
 	// $dummyButton.click(function() {
 	// 	console.log("Save location to Mongo");
@@ -43,6 +46,10 @@ $(function() {
 
 	$cityButton.click(function() {
 		console.log("Save map to Mongo");
+		currentItinerary = "";
+		currentItinerary = $nameInput.val();
+		console.log(nameInput.val());
+		console.log(currentItinerary);
 		pacIdChangeBack();
 		createMap();
 	});
@@ -133,6 +140,7 @@ $(function() {
 	});
 
   var createPlace = function() {
+  	console.log(currentItinerary);
   	var name = currentLocation.name;
   	var lat = currentLocation.geometry.location.lat();
   	var lng = currentLocation.geometry.location.lng();
@@ -148,7 +156,8 @@ $(function() {
 			lng: lng,
 			phone: phoneNumber,
 			website: website,
-			place_id: placeId 
+			place_id: placeId,
+			"itinerary": currentItinerary
 		}
 		$.ajax({
 			url: "http://localhost:3000/maps/place",
@@ -193,6 +202,7 @@ $(function() {
 	});
 
 	$itineraryButton.click(function(){
+		
 		pacIdChange();
 		initMap();
 		console.log($pacInputGet2);
@@ -218,6 +228,7 @@ $(function() {
 
 	$logoutButton.click(function(){
 		Cookies.remove('loggedinId');
+		currentItinerary = "";
 		$('#front-page').show();
 		$('#user-page').toggle();
 	});
@@ -236,6 +247,8 @@ $(function() {
 	});
 
 });////////END OF WINDOW ONLOAD
+
+
 var $userItineraryList = $('#user-itineraries');
 // console.log($userItineraryList);
 
@@ -246,7 +259,6 @@ var $userItineraryList = $('#user-itineraries');
 		dataType: 'json'
 	}).done(populateItineraries);
   };
-
 
  var populateItineraries = function(data){
  	$userItineraryList.empty();
@@ -259,10 +271,12 @@ var $userItineraryList = $('#user-itineraries');
  		$userItineraryList.append($locationItem);
  	};
  	var currentLocation = $('.itinerary-name');
-	console.log(currentLocation);
+	// console.log(currentLocation);
 	$('a').click(currentLocation, function(){
-		console.log($(this).html());
-		console.log(typeof $(this).html());
+		// console.log($(this).html());
+		// console.log(typeof $(this).html());
+		currentItinerary = $(this).html();
+		console.log(currentItinerary);
 		getLocation($(this).html());
 	});
  };
@@ -270,8 +284,8 @@ var $userItineraryList = $('#user-itineraries');
 var itineraryNames = document.getElementsByClassName('itinerary-name');
 
 var getLocation = function(data) {
-console.log('before ajax');
-console.log(data);
+// console.log('before ajax');
+// console.log(data);
 var itineraryData = {
 	"itinerary" : data
 }

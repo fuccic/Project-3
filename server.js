@@ -117,7 +117,14 @@ app.get('/users/itineraries', function(req, res){
 });
 
 app.post('/maps/place', function(req, res) {
-	console.log(req.body);
+	console.log(req.url);
+  var url = require('url');
+  var url_parts = url.parse(req.url, true);
+  console.log(url_parts);
+  console.log("This is my: " + url_parts.query.itinerary);
+  var itineraryQuery = url_parts.query.itinerary;
+  // console.log(req.url);
+  // console.log(req.body);
 	var name = req.body.name;
   var lat = req.body.lat;
   var lng = req.body.lng;
@@ -125,6 +132,7 @@ app.post('/maps/place', function(req, res) {
   var phoneNumber = req.body.phone;
   var website = req.body.website;
   var placeId = req.body.place_id;
+  console.log(itineraryQuery);
 
   var currentUser = req.cookies.loggedinId;
 
@@ -145,7 +153,7 @@ app.post('/maps/place', function(req, res) {
 
  User.findOne({'_id' : currentUser}, 'itineraries', function(err, user){
       for(var i = 0; i<user.itineraries.length;i++){
-        if(user.itineraries[i].name === "Trip to Uruguay"){
+        if(user.itineraries[i].name === itineraryQuery){
           console.log(user.itineraries[i].locations);
           user.itineraries[i].locations.push(place);
           user.save(function(err) {
@@ -227,9 +235,9 @@ app.post('/users', function(req, res){
 
 app.post('/users/login', function(req, res){
   console.log(req.body.username)
-  console.log(req.body.password_hash)
 	var username = req.body.username;
   var password_hash = md5(req.body.password_hash);
+  console.log(req.body.password_hash)
 
     User.findOne({'username' : username}).exec(function(err, user){
         if (username != null && user.password_hash === password_hash) {
