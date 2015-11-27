@@ -80,15 +80,21 @@ app.get('/maps', function(req, res) {
 });
 
 app.get('/maps/populate', function(req, res) {
-	 console.log(User.find(users));
-   // console.log(req.body.trip)
+    var url = require('url');
+    var url_parts = url.parse(req.url, true);
+    console.log(url_parts.query.itinerary);
+    var itineraryQuery = url_parts.query.itinerary;
+   // console.log(req.url)
+   // var url_parts = url.parse(request.url, true);
+   // var query = url_parts.query;
+   // var itineraryName = req.body.data;
 	 // var itineraryName = req.body.trip
    var currentUser = req.cookies.loggedinId;
    var popArray = [];
    User.findOne({'_id' : currentUser}, 'itineraries', function(err, user){
       for(var i = 0; i<user.itineraries.length;i++){
         for(var x = 0; x<user.itineraries[i].locations.length; x++){
-          if(user.itineraries[i].name === "Trip to Uruguay"){
+          if(user.itineraries[i].name === itineraryQuery){
             popArray.push(user.itineraries[i].locations[x]);
             // res.send(user.itineraries[i].locations[x]);
           };

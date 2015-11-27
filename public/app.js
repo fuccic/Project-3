@@ -258,40 +258,34 @@ var $userItineraryList = $('#user-itineraries');
  		$locationItem.append($locationLink);
  		$userItineraryList.append($locationItem);
  	};
+ 	var currentLocation = $('.itinerary-name');
+	console.log(currentLocation);
+	$('a').click(currentLocation, function(){
+		console.log($(this).html());
+		console.log(typeof $(this).html());
+		getLocation($(this).html());
+	});
  };
- 		// var $firstItinerary = $('#1');
- 		var itineraryNames = document.getElementsByClassName('itinerary-name');
 
- 	// 	$('.itinerary-name').each(function(index) {
-  // 			$(this).click(function(){
-		// 		console.log($(this).data('itinerary-name'));
-		// 	});
-		// });
-var printItineraryButtons = function (){
-		for (var i = 0; i < itineraryNames.length; i++){
-			console.log(itineraryNames[i].innerHTML);
-			// var currentName = itineraryNames[i];
-			itineraryNames[i].click(function(){
-			console.log(currentName);
-			});
-		}
- 		// console.log($firstItinerary);
- 		// console.log(itineraryNames);
-};
+var itineraryNames = document.getElementsByClassName('itinerary-name');
 
 var getLocation = function(data) {
 console.log('before ajax');
-// var trip = data
+console.log(data);
+var itineraryData = {
+	"itinerary" : data
+}
+
 $.ajax({
 	url: 'http://localhost:3000/maps/populate',
 	method: 'GET',
-	dataType: 'json'
-	// data: trip
+	dataType: 'json',
+	data: itineraryData
 }).done(renderMarkers);
 };
 
 var renderMarkers = function(data) {
- console.log(data);
+ // console.log(data);
  var map = new google.maps.Map(document.getElementById('map'), {
 
 zoom: 10,
