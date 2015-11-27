@@ -43,7 +43,7 @@
             <ul id="user-itineraries" class="dropdown-menu" aria-labelledby="dropdownMenu1">
             </ul>
           </div>
-            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">New Itinerary
+            <button type="button" class="btn btn-primary btn-sm" id="itinerary-button" data-toggle="modal" data-target="#myModal">New Itinerary
             </button>
             <a href="#" class="btn" id="logout">Logout</a>
           </ul>
@@ -52,7 +52,9 @@
       </nav>
       <div id="map" class="col-md-6 img-rounded"></div>
       <input class="form-control" id="pac-input" placeholder="Enter a location"></input>
-      <button id="save-location">+</button>
+      <button id="save-location" type="button" class="btn btn-default btn-md" aria-label="Left Align">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+      </button>
         <!-- <button id="city-button">Save Itinerary</button> -->
         <!-- <button id="dummy-button">Click Me To Save Location</button> -->
         <!-- <div class="col-md-3"> -->
@@ -66,11 +68,11 @@
       <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <button type="button" class="close" id="close-button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title" id="myModalLabel">Create Your Next Itinerary</h4>
           </div>
           <div class="modal-body">
-            <input class="form-control" id="pac-input" placeholder="Enter a location"></input>
+            <input class="form-control" id="pac-input-2" placeholder="Enter a location"></input>
             <input class="form-control" id="name-input" placeholder="Name your itinerary"></input>
           </div>
           <div class="modal-footer">
@@ -117,7 +119,7 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.4/handlebars.js"></script>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-      <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
+      <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places"></script>
     <script type="text/javascript" src="app.js"></script>
   </body>
 </html>

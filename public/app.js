@@ -20,16 +20,31 @@ $(function() {
 	var $saveLocationButton = $('#save-location');
 	console.log($saveLocationButton);
 
+	var $pacInputGet = $('#pac-input');
+	console.log($pacInputGet);
+
+	var $pacInputGet2 = $('#pac-input-2');
+	console.log($pacInputGet2);
+
+	var $itineraryButton = $('#itinerary-button');
+	console.log($itineraryButton);
+
+	var $pacInputGet3 = $('#pac-input-3');
+	console.log($pacInputGet3);
+
+	var $closeButton = $('#close-button');
+
 
 	// $dummyButton.click(function() {
 	// 	console.log("Save location to Mongo");
 
 	// });
 
+
 	$cityButton.click(function() {
 		console.log("Save map to Mongo");
+		pacIdChangeBack();
 		createMap();
-		
 	});
 
 	function initMap() {
@@ -163,6 +178,26 @@ $(function() {
 
 	initMap();
   
+  	var pacIdChange = function(){
+		$pacInputGet.attr("id","pac-input-3");
+		$pacInputGet2.attr("id","pac-input");
+	}
+
+	var pacIdChangeBack = function(){
+		$pacInputGet.attr("id","pac-input-2");
+		$pacInputGet3.attr("id","pac-input");
+	}
+
+	$closeButton.click(function(){
+		pacIdChangeBack();
+	});
+
+	$itineraryButton.click(function(){
+		pacIdChange();
+		initMap();
+		console.log($pacInputGet2);
+		console.log($pacInputGet);
+	});
 
 
 	var $signupButton = $('#signup-button');
@@ -212,25 +247,46 @@ var $userItineraryList = $('#user-itineraries');
 	}).done(populateItineraries);
   };
 
+
  var populateItineraries = function(data){
  	$userItineraryList.empty();
  	for(var i = 0; i<data.length; i++){
  		var $locationItem = $('<li>');
  		var $locationLink = $('<a href="#"></a>')
  		$locationLink.html(data[i]);
+ 		$locationLink.attr({id: i, "class": "itinerary-name"});
  		$locationItem.append($locationLink);
- 		// console.log(data[i]);
  		$userItineraryList.append($locationItem);
-
  	};
  };
+ 		// var $firstItinerary = $('#1');
+ 		var itineraryNames = document.getElementsByClassName('itinerary-name');
 
-var getLocation = function() {
+ 	// 	$('.itinerary-name').each(function(index) {
+  // 			$(this).click(function(){
+		// 		console.log($(this).data('itinerary-name'));
+		// 	});
+		// });
+var printItineraryButtons = function (){
+		for (var i = 0; i < itineraryNames.length; i++){
+			console.log(itineraryNames[i].innerHTML);
+			// var currentName = itineraryNames[i];
+			itineraryNames[i].click(function(){
+			console.log(currentName);
+			});
+		}
+ 		// console.log($firstItinerary);
+ 		// console.log(itineraryNames);
+};
+
+var getLocation = function(data) {
 console.log('before ajax');
+// var trip = data
 $.ajax({
 	url: 'http://localhost:3000/maps/populate',
 	method: 'GET',
 	dataType: 'json'
+	// data: trip
 }).done(renderMarkers);
 };
 
@@ -244,7 +300,7 @@ zoom: 10,
 // streetViewControl: false,
 draggable: true,
 // mapTypeControl: false,
-center: {lat: 0, lng: 0},
+center: {lat: data[0].lat, lng: data[0].lng},
  // center: new google.maps.LatLng(data.city_lat, data.city_lng)
 // mapTypeId: google.maps.MapTypeId.ROADMAP
 });

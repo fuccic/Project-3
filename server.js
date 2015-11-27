@@ -80,13 +80,15 @@ app.get('/maps', function(req, res) {
 });
 
 app.get('/maps/populate', function(req, res) {
-	// console.log(User.find(users));
-	 var currentUser = req.cookies.loggedinId;
+	 console.log(User.find(users));
+   // console.log(req.body.trip)
+	 // var itineraryName = req.body.trip
+   var currentUser = req.cookies.loggedinId;
    var popArray = [];
    User.findOne({'_id' : currentUser}, 'itineraries', function(err, user){
       for(var i = 0; i<user.itineraries.length;i++){
         for(var x = 0; x<user.itineraries[i].locations.length; x++){
-          if(user.itineraries[i].name === "Trip To Sydney"){
+          if(user.itineraries[i].name === "Trip to Uruguay"){
             popArray.push(user.itineraries[i].locations[x]);
             // res.send(user.itineraries[i].locations[x]);
           };
@@ -137,7 +139,7 @@ app.post('/maps/place', function(req, res) {
 
  User.findOne({'_id' : currentUser}, 'itineraries', function(err, user){
       for(var i = 0; i<user.itineraries.length;i++){
-        if(user.itineraries[i].name === "Trip To Sydney"){
+        if(user.itineraries[i].name === "Trip to Uruguay"){
           console.log(user.itineraries[i].locations);
           user.itineraries[i].locations.push(place);
           user.save(function(err) {
