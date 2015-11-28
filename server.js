@@ -54,7 +54,7 @@ app.get('/maps', function(req, res) {
 app.get('/maps/populate', function(req, res) {
   var url = require('url');
   var url_parts = url.parse(req.url, true);
-  console.log(url_parts.query.itinerary);
+  // console.log(url_parts.query.itinerary);
   var itineraryQuery = url_parts.query.itinerary;
   // console.log(req.url)
   // var url_parts = url.parse(request.url, true);
@@ -78,7 +78,7 @@ app.get('/maps/populate', function(req, res) {
 
 app.get('/users/itineraries', function(req, res){
   var currentUser = req.cookies.loggedinId;
-  var locationList = []
+  var locationList = [];
   User.findOne({'_id' : currentUser}, 'itineraries', function(err, user){
     for(var i = 0; i<user.itineraries.length;i++){
       var currentLocationName = user.itineraries[i].name
@@ -89,7 +89,7 @@ app.get('/users/itineraries', function(req, res){
 });
 
 app.post('/maps/place', function(req, res) {
-  console.log(req.body);
+  // console.log(req.body);
   var itineraryQuery = req.body.itinerary;
 	var name = req.body.name;
   var lat = req.body.lat;
@@ -98,7 +98,7 @@ app.post('/maps/place', function(req, res) {
   var phoneNumber = req.body.phone;
   var website = req.body.website;
   var placeId = req.body.place_id;
-  console.log(itineraryQuery);
+  // console.log(itineraryQuery);
 
   var currentUser = req.cookies.loggedinId;
 
@@ -115,7 +115,7 @@ app.post('/maps/place', function(req, res) {
   User.findOne({'_id' : currentUser}, 'itineraries', function(err, user){
     for(var i = 0; i<user.itineraries.length;i++){
       if(user.itineraries[i].name === itineraryQuery){
-        console.log(user.itineraries[i].locations);
+        // console.log(user.itineraries[i].locations);
         user.itineraries[i].locations.push(place);
         user.save(function(err) {
           if(err) {
@@ -125,7 +125,7 @@ app.post('/maps/place', function(req, res) {
           }
         });
       }else{
-        console.log("Not right");
+        console.log("Failed to post new location to itinerary");
       };
      };
   });
@@ -149,9 +149,9 @@ app.post('/maps', function(req, res) {
   }); 
   
   User.findOne({'_id' : currentUser}).exec(function(err, user){
-    console.log(user.itineraries);
+    // console.log(user.itineraries);
     user.itineraries.push(map);
-    console.log(user.itineraries);
+    // console.log(user.itineraries);
     user.save(function(err) {
       if(err) {
         console.log(err);
@@ -165,7 +165,7 @@ app.post('/maps', function(req, res) {
 app.get('/users', function(req, res){
 	User.find().then(function(users){
 		res.send(users);
-	})
+	});
 });
 
 app.post('/users', function(req, res){
@@ -184,26 +184,25 @@ app.post('/users', function(req, res){
       console.log(user.username + ' created!');
       //set the cookie!
       res.cookie("loggedinId", user.id);
-      res.send(user)
+      res.send(user);
     };  
   });
 });
 
 app.post('/users/login', function(req, res){
-  console.log(req.body.username)
+  // console.log(req.body.username);
 	var username = req.body.username;
   var password_hash = md5(req.body.password_hash);
-  console.log(req.body.password_hash)
+  // console.log(req.body.password_hash);
 
   User.findOne({'username' : username}).exec(function(err, user){
     if (username != null && user.password_hash === password_hash) {
-      console.log(user.id);
+      // console.log(user.id);
       res.cookie("loggedinId", user.id);
-      console.log('Worked');
       res.send(user);
         }
     else {
-      console.log('failed')
+      console.log('failed to login user')
     };
   });
 });
