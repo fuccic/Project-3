@@ -48,8 +48,8 @@ $(function() {
 		console.log("Save map to Mongo");
 		currentItinerary = "";
 		currentItinerary = $nameInput.val();
-		console.log(nameInput.val());
-		console.log(currentItinerary);
+		// console.log($nameInput.val());
+		// console.log(currentItinerary);
 		pacIdChangeBack();
 		createMap();
 	});
@@ -157,7 +157,7 @@ $(function() {
 			phone: phoneNumber,
 			website: website,
 			place_id: placeId,
-			"itinerary": currentItinerary
+			itinerary: currentItinerary
 		}
 		$.ajax({
 			url: "http://localhost:3000/maps/place",
@@ -228,6 +228,7 @@ $(function() {
 
 	$logoutButton.click(function(){
 		Cookies.remove('loggedinId');
+		initMap();
 		currentItinerary = "";
 		$('#front-page').show();
 		$('#user-page').toggle();
