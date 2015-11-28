@@ -1,30 +1,27 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Travel(d)</title>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">	
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
-    <link href='https://fonts.googleapis.com/css?family=Raleway:600' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="styles.css">
-  </head>
-  <body>
-
-    <div class="container splash" >
-      <nav class="navbar navbar-default navbar-fixed-top" style="display: none">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">Travel(d)</a>
-            </div>
-              <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-              <ul class="nav navbar-nav">
-              </ul>
-            </div>
-      </nav>
-       
-    <div class="row" id="user-page" style="display: none">
-      <nav class="navbar">
-        <div class="container-fluid">
-          <div class="navbar-header">
+<head>
+  <title>Travel(d)</title>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <meta charset="utf-8">	
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+  <link href='https://fonts.googleapis.com/css?family=Raleway:600' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+  <div class="container splash" >
+    <nav class="navbar navbar-default navbar-fixed-top" style="display: none">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Travel(d)</a>
+      </div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav"></ul>
+      </div>
+    </nav> 
+  <div class="row" id="user-page" style="display: none">
+    <nav class="navbar">
+      <div class="container-fluid">
+        <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
@@ -35,35 +32,26 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
-          <div class="dropdown">
-            <button id="dropdown-button" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-              Itineraries
-              <span class="caret"></span>
-            </button>
-            <ul id="user-itineraries" class="dropdown-menu" aria-labelledby="dropdownMenu1">
-            </ul>
-          </div>
-            <button type="button" class="btn btn-primary btn-sm" id="itinerary-button" data-toggle="modal" data-target="#myModal">New Itinerary
-            </button>
+            <div class="dropdown">
+              <button id="dropdown-button" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                Itineraries
+                <span class="caret"></span>
+              </button>
+              <ul id="user-itineraries" class="dropdown-menu" aria-labelledby="dropdownMenu1"></ul>
+            </div>
+            <button type="button" class="btn btn-primary btn-sm" id="itinerary-button" data-toggle="modal" data-target="#myModal">New Itinerary</button>
             <a href="#" class="btn" id="logout">Logout</a>
           </ul>
         </div>
       </div>
-      </nav>
-      <div id="map" class="col-md-6 img-rounded"></div>
-      <input class="form-control" id="pac-input" placeholder="Enter a location"></input>
-      <button id="save-location" type="button" class="btn btn-default btn-md" aria-label="Left Align">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-      </button>
-        <!-- <button id="city-button">Save Itinerary</button> -->
-        <!-- <button id="dummy-button">Click Me To Save Location</button> -->
-        <!-- <div class="col-md-3"> -->
-          <!-- <ul  class="list-holder" id="itinerary-info" >ITINERARY INFO -->
-            <!-- <li id="new-location"></li> -->
-            <!-- <input id="pac-input" type="text" placeholder="Enter a location"> -->
-          <!-- </ul> -->
-      <!-- </div> -->
+    </nav>
+    <div id="map" class="col-md-6 img-rounded"></div>
+    <input class="form-control" id="pac-input" placeholder="Enter a location"></input>
+    <button id="save-location" type="button" class="btn btn-default btn-md" aria-label="Left Align">
+      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    </button>
 
+    <!-- ITINERARY MODAL -->
     <div class="modal fade" id="myModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
       <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
