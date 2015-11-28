@@ -45,12 +45,21 @@ app.listen(port);
 // ROUTES
 // =============
 
+// GET route to show all users in Json
+app.get('/users', function(req, res){
+  User.find().then(function(users){
+    res.send(users);
+  });
+});
+
+// GET route to show all maps in Json 
 app.get('/maps', function(req, res) {
 	Map.find().then(function(maps) {
 		res.send(maps);
 	});
 });
 
+// GET route used by getLocation and genderMarkers functions in app.js
 app.get('/maps/populate', function(req, res) {
   var url = require('url');
   var url_parts = url.parse(req.url, true);
@@ -76,6 +85,7 @@ app.get('/maps/populate', function(req, res) {
   });
 });
 
+// GET route used by getItineraries and populateItineraries functions in app.js
 app.get('/users/itineraries', function(req, res){
   var currentUser = req.cookies.loggedinId;
   var locationList = [];
@@ -88,6 +98,7 @@ app.get('/users/itineraries', function(req, res){
   });
 });
 
+// POST route used by createPlace functions in app.js
 app.post('/maps/place', function(req, res) {
   // console.log(req.body);
   var itineraryQuery = req.body.itinerary;
@@ -99,9 +110,7 @@ app.post('/maps/place', function(req, res) {
   var website = req.body.website;
   var placeId = req.body.place_id;
   // console.log(itineraryQuery);
-
   var currentUser = req.cookies.loggedinId;
-
   var place = new Place({
     name: name,
     lat: lat,
@@ -112,6 +121,7 @@ app.post('/maps/place', function(req, res) {
     placeId: placeId
   });
 
+  // Mongoose query below finds the currentUser, using the cookie. It loops through the user's itineraries and compares each value to the itinerary key value pair in the req. Once there is a match, that place object is pushed into the locations array. 
   User.findOne({'_id' : currentUser}, 'itineraries', function(err, user){
     for(var i = 0; i<user.itineraries.length;i++){
       if(user.itineraries[i].name === itineraryQuery){
@@ -131,23 +141,22 @@ app.post('/maps/place', function(req, res) {
   });
 });
 
-
+// POST request used by the createMap function in app.js
 app.post('/maps', function(req, res) {
   // console.log(res.cookie("loggedinId"));
   // console.log(req.body);
   var name = req.body.name;
   var city_lat = req.body.city_lat;
   var city_lng = req.body.city_lng;
-
   var currentUser = req.cookies.loggedinId;
   // console.log(currentUser);
-
   var map = new Map({
     name: name,
     city_lat: city_lat,
     city_lng: city_lng
-  }); 
-  
+  });
+
+  // Mongoose query below finds the currentUser, using the cookie. It then pushes the map object into the user's itineraries array. 
   User.findOne({'_id' : currentUser}).exec(function(err, user){
     // console.log(user.itineraries);
     user.itineraries.push(map);
@@ -162,12 +171,7 @@ app.post('/maps', function(req, res) {
   }); 
 });
 
-app.get('/users', function(req, res){
-	User.find().then(function(users){
-		res.send(users);
-	});
-});
-
+// POST requet used by createUser and userShow functions in app.js. Creates a user. 
 app.post('/users', function(req, res){
 	password_hash = md5(req.body.password_hash);
 
@@ -189,12 +193,14 @@ app.post('/users', function(req, res){
   });
 });
 
+// POST requet used by signinSubmit and userShow functions in app.js. Allows a user to log in. 
 app.post('/users/login', function(req, res){
   // console.log(req.body.username);
 	var username = req.body.username;
   var password_hash = md5(req.body.password_hash);
   // console.log(req.body.password_hash);
 
+  // Mongoose query below find the user and compares the password hashed for authentication and sets the cookie. 
   User.findOne({'username' : username}).exec(function(err, user){
     if (username != null && user.password_hash === password_hash) {
       // console.log(user.id);

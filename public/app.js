@@ -231,7 +231,6 @@ $(function() {
 
 });////////END OF WINDOW ONLOAD
 
-
 var $userItineraryList = $('#user-itineraries');
 // console.log($userItineraryList);
 
