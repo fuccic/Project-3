@@ -19,8 +19,8 @@ body{
 #map {
     float: left;
     margin-left: 40px;
-    height: 100%; 
-    width: 50%;
+    height: 300px; 
+    width: 500px;
     background-color: papayawhip;
 }
 
@@ -43,11 +43,39 @@ li{
   background-color: #fff;
   font-family: Roboto;
   font-size: 15px;
+  display: inline;
   font-weight: 300;
   padding: 0 11px 0 13px;
   text-overflow: ellipsis;
   width: 200px;
 }
+
+#pac-input-itinerary {
+  background-color: #fff;
+  font-family: Roboto;
+  font-size: 15px;
+  display: inline;
+  font-weight: 300;
+  padding: 0 11px 0 13px;
+  text-overflow: ellipsis;
+  width: 200px;
+}
+
+#pac-input-3{
+  display: none;
+}
+
+#pac-input-2{
+  background-color: #fff;
+  font-family: Roboto;
+  font-size: 15px;
+  display: inline;
+  font-weight: 300;
+  padding: 0 11px 0 13px;
+  text-overflow: ellipsis;
+  width: 200px;
+}
+
 
 #itinerary-info{
   float: right;
@@ -172,12 +200,6 @@ h1{
   color: white;
   text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
   font-family: 'Raleway', sans-serif;
-}
-
-#user-page{
-
-  margin-top: ;
-
 }
 
 
