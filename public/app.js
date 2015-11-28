@@ -42,6 +42,7 @@ $(function() {
 		createMap();
 	});
 
+	// function that initalizes Google map, location autocomplete, sets marker positons on location. 
 	function initMap() {
 	  var map = new google.maps.Map(document.getElementById('map'), {
 	    center: {lat: 0, lng: 0},
@@ -119,8 +120,11 @@ $(function() {
   $saveLocationButton.click(function() {
 		// console.log("Save place to Mongo");
 		createPlace();	
+		console.log(currentItinerary);
+		getLocation(currentItinerary);
 	});
 
+	// allows user to input a location and makes an ajax request to add it to the user's itinerary
   var createPlace = function() {
   	// console.log(currentItinerary);
   	var name = currentLocation.name;
@@ -148,6 +152,7 @@ $(function() {
 		}).done(); 
   };	
 
+	// function that allows user to create new trip itinerary(map), and to name their trip. 
   var createMap = function() {
   	var name = $('#name-input').val();
   	var lat = currentLocation.geometry.location.lat();
@@ -195,19 +200,19 @@ $(function() {
 
 
 	var $signupButton = $('#signup-button');
-
+	// generates signup form on click
 	$signupButton.click(function(){
 		signUpForm();
 	});
 
 	var $signinButton = $('#signin-button');
-
+	// generates signin form on click
 	$signinButton.click(function(){
 		showSignIn();
 	});
 
 	var $logoutButton = $('#logout');
-
+	// logs user out on click
 	$logoutButton.click(function(){
 		Cookies.remove('loggedinId');
 		initMap();
@@ -224,7 +229,7 @@ $(function() {
 
 	var $dropdownButton = $('#dropdown-button');
 	// console.log($dropdownButton);
-
+	// on click of itinerary list, it populates the names of the trips in the dropdown menu
 	$dropdownButton.click(function(){
 		getItineraries();
 	});
@@ -242,6 +247,7 @@ var getItineraries = function(){
 	}).done(populateItineraries);
 };
 
+// adds the name of each itinerary, as well ad a link to that specific itineray to the dropdown menu
 var populateItineraries = function(data){
  	$userItineraryList.empty();
  	for(var i = 0; i<data.length; i++){
@@ -265,6 +271,7 @@ var populateItineraries = function(data){
 
 var itineraryNames = document.getElementsByClassName('itinerary-name');
 
+// places all of the markers for a specific itinerary on the map. 
 var getLocation = function(data) {
 	// console.log('before ajax');
 	// console.log(data);
@@ -279,6 +286,7 @@ var getLocation = function(data) {
 	}).done(renderMarkers);
 };
 
+// uses Googles autocomplete feature to allow user to search for different locations, add them to their itinerary, as well as a marker. 
 var renderMarkers = function(data) {
  // console.log(data);
 	var map = new google.maps.Map(document.getElementById('map'), {
@@ -328,6 +336,7 @@ var renderMarkers = function(data) {
 	};
 };
 
+// generates the sign up form, on click it runs the createUser function 
 var signUpForm = function(){
 	var formDiv = $('#form-container');
 	$('#signup-button').remove();
@@ -341,6 +350,7 @@ var signUpForm = function(){
 	});
 };
 
+// function that creates a user
 var createUser = function(){
 	var formDiv = $('#form-container');
 	var username = $('#username-field').val();
@@ -356,6 +366,7 @@ var createUser = function(){
 	}).done(userShow())
 };
 
+// 
 var userShow = function(data){
 	var frontPage = $("#front-page");
 	var userPage = $("#user-page");
@@ -364,6 +375,7 @@ var userShow = function(data){
 	user = Cookies.get('loggedinId');
 };
 
+// shows user sign in field, on click it runs sign in submit
 var showSignIn = function(){
 	var formDiv = $('#form-container');
 	var source = $('#user-signin-template').html();
@@ -378,6 +390,7 @@ var showSignIn = function(){
 	});
 };
 
+// signs in the user
 var signinSubmit = function(){
 	var usernameInput = $("#username").val()
 	var passwordInput = $("#password").val()
@@ -389,10 +402,20 @@ var signinSubmit = function(){
 		url: 'http://localhost:3000/users/login',
 		method: 'POST',
 		data: user,
-	}).done(userShow());
+		statusCode: {
+      503: function (response) {
+     	},
+     	200: function (response) {
+         userShow();
+     	}
+    }
+	})
 };
 
 var showSplashPage = function(){
+		$('#username').hide();
+		$('#password').hide();
+		$('.signin-submit').hide();
 		$('#signup-button').show();
 		$('#signin-button').show();
 };

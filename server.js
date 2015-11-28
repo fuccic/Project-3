@@ -202,16 +202,15 @@ app.post('/users/login', function(req, res){
 
   // Mongoose query below find the user and compares the password hashed for authentication and sets the cookie. 
   User.findOne({'username' : username}).exec(function(err, user){
-    if (username != null && user.password_hash === password_hash) {
-      // console.log(user.id);
+    console.log(user);
+    if (user != null && user.password_hash === password_hash) {
+      console.log("success");
       res.cookie("loggedinId", user.id);
       res.send(user);
         }
-    else {
-      console.log('failed to login user')
+    else{
+      res.status(503).send();
     };
   });
 });
-
-
 
