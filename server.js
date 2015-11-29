@@ -27,8 +27,7 @@ app.use(cookieParser());
 // =============
 // DATABASE
 // =============
-var mongoUri = process.env.MONGOLAB_URI || 'mongodb://localhost/itineraries';
-mongoose.connect(mongoUri);
+mongoose.connect('mongodb://localhost/itineraries');
 
 // =============
 // MODELS
@@ -86,16 +85,42 @@ app.get('/maps/populate', function(req, res) {
   });
 });
 
+app.get('/users/locations', function(req, res){
+  var url = require('url');
+  var url_parts = url.parse(req.url, true);
+  var itineraryQuery = url_parts.query.itinerary;
+  console.log(itineraryQuery);
+  var currentUser = req.cookies.loggedinId;
+  console.log(currentUser);
+  var locationsList = [];
+  User.findOne({'_id' : currentUser}, 'itineraries', function(err, user){
+    for(var i = 0; i<user.itineraries.length;i++){
+      if (user.itineraries[i].name === itineraryQuery){
+        // console.log(user.itineraries[i].locations);
+        for (var x = 0; x < user.itineraries[i].locations.length; x++) {
+          // console.log(user.itineraries[i].locations[x]);
+          // console.log("LOCATION ID: " + user.itineraries[i].locations[x].id)
+              locationsList.push(user.itineraries[i].locations[x].name);
+          };
+        };
+      };
+  console.log(locationsList);
+  res.send(locationsList);
+  });
+});
+
+
+
 // GET route used by getItineraries and populateItineraries functions in app.js
 app.get('/users/itineraries', function(req, res){
   var currentUser = req.cookies.loggedinId;
-  var locationList = [];
+  var itineraryList = [];
   User.findOne({'_id' : currentUser}, 'itineraries', function(err, user){
     for(var i = 0; i<user.itineraries.length;i++){
       var currentLocationName = user.itineraries[i].name
-      locationList.push(currentLocationName)
+      itineraryList.push(currentLocationName)
     };
-  res.send(locationList);
+  res.send(itineraryList);
   });
 });
 
@@ -154,28 +179,28 @@ app.delete('/maps/place', function(req,res){
   console.log(placeNumber);
   console.log(req.body);
 
-  User.findOne({'_id' : currentUser}, 'itineraries', function(err, user){
-    // console.log(user.itineraries);
-  for(var i = 0; i<user.itineraries.length;i++){
-    if (user.itineraries[i].name === itinerary){
-      // console.log(user.itineraries[i].locations);
-      for (var x = 0; x < user.itineraries[i].locations.length; x++) {
-        // console.log(user.itineraries[i].locations[x]);
-        // console.log("LOCATION ID: " + user.itineraries[i].locations[x].id)
-        if(user.itineraries[i].locations[x].id === placeNumber){
-            console.log("THIS IS DELETED: " + user.itineraries[i].locations[x].id);
-            user.itineraries[i].locations[x].remove();
-          } 
+    User.findOne({'_id' : currentUser}, 'itineraries', function(err, user){
+      // console.log(user.itineraries);
+    for(var i = 0; i<user.itineraries.length;i++){
+      if (user.itineraries[i].name === itinerary){
+        // console.log(user.itineraries[i].locations);
+        for (var x = 0; x < user.itineraries[i].locations.length; x++) {
+          // console.log(user.itineraries[i].locations[x]);
+          // console.log("LOCATION ID: " + user.itineraries[i].locations[x].id)
+          if(user.itineraries[i].locations[x].id === placeNumber){
+              console.log("THIS IS DELETED: " + user.itineraries[i].locations[x].id);
+              user.itineraries[i].locations[x].remove();
+            } 
+          };
         };
       };
-    };
-    user.save(function(err) {
-      if(err) {
-        console.log(err);
-      } else {
-        console.log(user.itineraries[i].locations);
-      };  
-    });
+      user.save(function(err) {
+        if(err) {
+          console.log(err);
+        } else {
+          console.log(user.itineraries[i].locations);
+        };  
+      });
   });
 });
 // POST request used by the createMap function in app.js

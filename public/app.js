@@ -125,6 +125,7 @@ $(function() {
 		createPlace();	
 		console.log(currentItinerary);
 		getLocation(currentItinerary);
+		generateItineraryList(currentItinerary);
 	});
 
 	// allows user to input a location and makes an ajax request to add it to the user's itinerary
@@ -151,7 +152,7 @@ $(function() {
 	$locationList.text(name);
 	console.log(name);
 		$.ajax({
-			url: "https://localhost:3000/maps/place",
+			url: "http://localhost:3000/maps/place",
 			method: "POST",
 			data: mapData
 		}).done(); 
@@ -169,7 +170,7 @@ $(function() {
 			city_lng: lng 
 		};
 		$.ajax({
-			url: "https://localhost:3000/maps",
+			url: "http://localhost:3000/maps",
 			method: "POST",
 			data: mapData
 		}).done();
@@ -241,23 +242,64 @@ $(function() {
 
 });////////END OF WINDOW ONLOAD
 
-var $deleteLocation = $('#delete-location-button');
-  console.log($deleteLocation);
+// var $deleteLocation = $('#delete-location-button');
+// console.log($deleteLocation);
 
-  $deleteLocation.click(function(){
-		console.log("location deleted");
-		deletePlace();
+//   $deleteLocation.click(function(){
+// 		console.log("location deleted");
+// 		deletePlace();
+// 	});
+
+var $itineraryList = $('#itinerary-list');
+// console.log($itineraryList);
+
+var generateItineraryList = function(data) {
+	// console.log('before ajax');
+	// console.log(data);
+	console.log(currentItinerary);
+	var locationsData = {
+		"itinerary" : data
+	};
+	$.ajax({
+		url: 'http://localhost:3000/users/locations',
+		method: 'GET',
+		dataType: 'json',
+		data: locationsData
+	}).done(displayLocations);
+};
+
+var displayLocations = function(data){
+	$itineraryList.empty();
+ 	for(var i = 0; i<data.length; i++){
+ 		// console.log(data[i]);
+ 		var $locationItem = $('<li>');
+ 		var $locationLink = $('<a href="#"></a>');
+ 		var $removeButton = $('<button>');
+ 		$locationLink.html(data[i]);
+ 		$locationLink.attr({id: i, "class": "location-name"});
+ 		$removeButton.attr({"class": "btn btn-default glyphicon glyphicon-minus"});
+ 		$locationItem.append($locationLink);
+ 		$locationItem.append($removeButton);
+ 		$itineraryList.append($locationItem);
+ 	};
+ 	var currentLocation = $('.location-name');
+	// console.log(currentLocation);
+	$('a').click(currentLocation, function(){
+		// console.log($(this).html());
+		// console.log(typeof $(this).html());
+		console.log("yehahhhh");
 	});
+};
 
 
 var deletePlace = function(){
-	var placeIdentification = "565b4ab537f936dfc1cf7069";
+	var placeIdentification = "565b5b0cfa98676bc454ae9a";
   	var data = {
   		identification: placeIdentification,
   		itinerary: currentItinerary
   	}
   	$.ajax({
-		url: 'https://localhost:3000/maps/place',
+		url: 'http://localhost:3000/maps/place',
 		method: 'DELETE',
 		dataType: 'json',
 		data: data
@@ -269,7 +311,7 @@ var $userItineraryList = $('#user-itineraries');
 
 var getItineraries = function(){
 	$.ajax({
-	url: 'https://localhost:3000/users/itineraries',
+	url: 'http://localhost:3000/users/itineraries',
 	method: 'GET',
 	dataType: 'json'
 	}).done(populateItineraries);
@@ -294,6 +336,7 @@ var populateItineraries = function(data){
 		currentItinerary = $(this).html();
 		console.log(currentItinerary);
 		getLocation($(this).html());
+		generateItineraryList(currentItinerary);
 	});
 };
 
@@ -308,7 +351,7 @@ var getLocation = function(data) {
 		"itinerary" : data
 	};
 	$.ajax({
-		url: 'https://localhost:3000/maps/populate',
+		url: 'http://localhost:3000/maps/populate',
 		method: 'GET',
 		dataType: 'json',
 		data: itineraryData
@@ -340,7 +383,7 @@ var renderMarkers = function(data) {
   });
 
 	autocomplete.addListener('place_changed', function() {
-		marker.setVisible(false);
+	marker.setVisible(false);
     var place = autocomplete.getPlace();
     currentLocation = place;
     $addLocation = $('<li>');
@@ -356,7 +399,7 @@ var renderMarkers = function(data) {
 	});
 
 	for(var i=0;i<data.length;i++) {
-		console.log(data[i]);
+		// console.log(data[i]);
 		var marker = new google.maps.Marker ({
 	    position: {lat: data[i].lat, lng: data[i].lng},
 	    map: map,
@@ -389,7 +432,7 @@ var createUser = function(){
 		password_hash: password
 	};
 	$.ajax({
-		url: "https://localhost:3000/users",
+		url: "http://localhost:3000/users",
 		method: "POST",
 		data: userData
 	}).done(userShow())
@@ -428,7 +471,7 @@ var signinSubmit = function(){
 		password_hash: passwordInput
 	};
 	$.ajax({
-		url: 'https://localhost:3000/users/login',
+		url: 'http://localhost:3000/users/login',
 		method: 'POST',
 		data: user,
 		statusCode: {

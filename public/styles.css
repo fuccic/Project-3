@@ -234,3 +234,10 @@ h1{
   height: 20%;
 >>>>>>> display-div*/
 
+#itinerary-list {
+  margin-top: 10px;
+  float: right;
+  width: 20%;
+  margin-right: 410px;
+}
+
