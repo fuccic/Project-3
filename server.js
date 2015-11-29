@@ -27,7 +27,8 @@ app.use(cookieParser());
 // =============
 // DATABASE
 // =============
-mongoose.connect('mongodb://localhost/itineraries');
+var mongoUri = process.env.MONGOLAB_URI || 'mongodb://localhost/itineraries';
+mongoose.connect(mongoUri);
 
 // =============
 // MODELS
