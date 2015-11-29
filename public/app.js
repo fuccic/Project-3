@@ -40,6 +40,7 @@ $(function() {
 		currentItinerary = $nameInput.val();
 		// console.log($nameInput.val());
 		// console.log(currentItinerary);
+		$saveLocationButton.show();
 		pacIdChangeBack();
 		createMap();
 	});
@@ -195,10 +196,12 @@ $(function() {
 
 	$closeButton.click(function(){
 		pacIdChangeBack();
+		$saveLocationButton.show();
 	});
 
 	$itineraryButton.click(function(){	
 		pacIdChange();
+		$saveLocationButton.hide();
 		initMap();
 		// console.log($pacInputGet2);
 		// console.log($pacInputGet);
