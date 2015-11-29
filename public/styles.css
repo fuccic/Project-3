@@ -251,3 +251,8 @@ h1{
   float: right;
 }
 
+#logo{
+  color: white;
+  font-family: 'Raleway', sans-serif;
+  font-size: 30px;
+}
