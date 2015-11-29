@@ -21,7 +21,7 @@
   <div class="row" id="user-page" style="display: none">
     <nav class="navbar">
       <div class="container-fluid">
-        <div class="navbar-header">
+<!--         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
@@ -29,19 +29,17 @@
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="#"></a>
-        </div>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav navbar-right">
+        </div> -->
+        <div class="navbar" id="navbar-collapse">
+            <a href="#" class="btn pull-right" id="logout">Logout</a>
             <div class="dropdown">
-              <button id="dropdown-button" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+              <button id="dropdown-button" class="btn btn-default dropdown-toggle btn-sm pull-right" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                 Itineraries
                 <span class="caret"></span>
               </button>
-              <ul id="user-itineraries" class="dropdown-menu" aria-labelledby="dropdownMenu1"></ul>
+              <ul id="user-itineraries" class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1"></ul>
             </div>
-            <button type="button" class="btn btn-primary btn-sm" id="itinerary-button" data-toggle="modal" data-target="#myModal">New Itinerary</button>
-            <a href="#" class="btn" id="logout">Logout</a>
-          </ul>
+            <button type="button" class="btn btn-default btn-sm pull-right" id="itinerary-button" data-toggle="modal" data-target="#myModal">New Itinerary</button>
         </div>
       </div>
     </nav>
