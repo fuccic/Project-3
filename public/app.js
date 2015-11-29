@@ -31,6 +31,8 @@ $(function() {
 	// console.log($closeButton);
 	var $nameInput = $('#name-input');
 	// console.log($nameInput);
+	var $locationList = $('#populated-list');
+	console.log($locationList);
 
 	$cityButton.click(function() {
 		console.log("Save map to Mongo");
@@ -119,6 +121,7 @@ $(function() {
 
   $saveLocationButton.click(function() {
 		// console.log("Save place to Mongo");
+
 		createPlace();	
 		console.log(currentItinerary);
 		getLocation(currentItinerary);
@@ -132,21 +135,23 @@ $(function() {
   	var lng = currentLocation.geometry.location.lng();
   	var address = currentLocation.formatted_address;
   	var phoneNumber = currentLocation.formatted_phone_number;
-		var website = currentLocation.website;
-		var placeId = currentLocation.place_id;
-		// console.log('ajax to create map');
-		var mapData = {
-			name: name,
-			address: address,
-			lat: lat,
-			lng: lng,
-			phone: phoneNumber,
-			website: website,
-			place_id: placeId,
-			itinerary: currentItinerary
-		};
+	var website = currentLocation.website;
+	var placeId = currentLocation.place_id;
+	// console.log('ajax to create map');
+	var mapData = {
+		name: name,
+		address: address,
+		lat: lat,
+		lng: lng,
+		phone: phoneNumber,
+		website: website,
+		place_id: placeId,
+		itinerary: currentItinerary
+	};
+	$locationList.text(name);
+	console.log(name);
 		$.ajax({
-				url: "http://localhost:3000/maps/place",
+			url: "http://localhost:3000/maps/place",
 			method: "POST",
 			data: mapData
 		}).done(); 
@@ -236,6 +241,29 @@ $(function() {
 
 });////////END OF WINDOW ONLOAD
 
+var $deleteLocation = $('#delete-location-button');
+  console.log($deleteLocation);
+
+  $deleteLocation.click(function(){
+		console.log("location deleted");
+		deletePlace();
+	});
+
+
+var deletePlace = function(){
+	var placeIdentification = "565b4ab537f936dfc1cf7069";
+  	var data = {
+  		identification: placeIdentification,
+  		itinerary: currentItinerary
+  	}
+  	$.ajax({
+		url: 'http://localhost:3000/maps/place',
+		method: 'DELETE',
+		dataType: 'json',
+		data: data
+	}).done(console.log("Deleted some shit"));
+};
+
 var $userItineraryList = $('#user-itineraries');
 // console.log($userItineraryList);
 
@@ -268,6 +296,7 @@ var populateItineraries = function(data){
 		getLocation($(this).html());
 	});
 };
+
 
 var itineraryNames = document.getElementsByClassName('itinerary-name');
 
