@@ -48,6 +48,7 @@ li{
   padding: 0 11px 0 13px;
   text-overflow: ellipsis;
   width: 200px;
+  margin-left: 9px;
 }
 
 #pac-input-itinerary {
@@ -74,6 +75,7 @@ li{
   padding: 0 11px 0 13px;
   text-overflow: ellipsis;
   width: 200px;
+  margin-left: 9px;
 }
 
 
@@ -91,6 +93,7 @@ li{
   font-size: 15px;
   font-weight: 300;
   margin-top: 4px;
+  margin-left: 9px;
 }
 
 .pac-container {
@@ -103,7 +106,7 @@ li{
 }
 .modal{
     z-index: 20; 
-    top:5%;
+    top:15%;
     left:50%;
     outline: none; 
 }
@@ -154,7 +157,7 @@ label{
 
 .btn-default{
   background-color: BurlyWood;
-  margin: 2%;
+  /*margin: 2%;*/
   font-family: 'Raleway', sans-serif;
 }
 
@@ -202,4 +205,25 @@ h1{
   font-family: 'Raleway', sans-serif;
 }
 
+#dropdown-button{
+  margin-left: 20px;
+  margin-right: 75px;
+}
 
+#user-itineraries{
+  margin-top: 30px;
+  margin-left: 20px;
+  margin-right: 93px;
+}
+
+#navbar-collapse{
+  margin-top: 20px;
+}
+
+#logout{
+  margin-right: 20px;
+}
+
+#save-location{
+  margin-right: 90px;
+}
