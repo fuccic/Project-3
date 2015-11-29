@@ -19,13 +19,14 @@ body{
 #map {
     float: left;
     margin-left: 40px;
-    height: 300px; 
-    width: 500px;
+    height: 400px; 
+    width: 800px;
     background-color: papayawhip;
 }
 
 li{
   list-style: none;
+  margin-top: 30px;
 
 }
 .controls {
@@ -237,7 +238,16 @@ h1{
 #itinerary-list {
   margin-top: 10px;
   float: right;
-  width: 20%;
-  margin-right: 410px;
+  width: 10%;
+  margin-right: 250px;
+}
+
+.location-name{
+  width: 10px;
+  color: white;
+}
+
+#delete-button{
+  float: right;
 }
 
