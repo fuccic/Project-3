@@ -141,6 +141,43 @@ app.post('/maps/place', function(req, res) {
   });
 });
 
+
+// DELETE request removing a location from an itinerary
+app.delete('/maps/place', function(req,res){
+
+  var currentUser = req.cookies.loggedinId;
+  // console.log(currentUser);
+  var itinerary = req.body.itinerary;
+  // console.log(itinerary);
+  var placeNumber = req.body.identification;
+  console.log(placeNumber);
+
+  console.log(req.body);
+
+    User.findOne({'_id' : currentUser}, 'itineraries', function(err, user){
+      // console.log(user.itineraries);
+    for(var i = 0; i<user.itineraries.length;i++){
+      if (user.itineraries[i].name === itinerary){
+        // console.log(user.itineraries[i].locations);
+        for (var x = 0; x < user.itineraries[i].locations.length; x++) {
+          // console.log(user.itineraries[i].locations[x]);
+          // console.log("LOCATION ID: " + user.itineraries[i].locations[x].id)
+          if(user.itineraries[i].locations[x].id === placeNumber){
+              console.log("THIS IS DELETED: " + user.itineraries[i].locations[x].id);
+                user.itineraries[i].locations[x].remove();
+            } 
+          };
+        };
+      };
+      user.save(function(err) {
+          if(err) {
+          console.log(err);
+          } else {
+          console.log(user.itineraries[i].locations);
+          };  
+    });
+  });
+});
 // POST request used by the createMap function in app.js
 app.post('/maps', function(req, res) {
   // console.log(res.cookie("loggedinId"));
@@ -193,7 +230,7 @@ app.post('/users', function(req, res){
   });
 });
 
-// POST requet used by signinSubmit and userShow functions in app.js. Allows a user to log in. 
+// POST request used by signinSubmit and userShow functions in app.js. Allows a user to log in. 
 app.post('/users/login', function(req, res){
   // console.log(req.body.username);
 	var username = req.body.username;
@@ -213,4 +250,21 @@ app.post('/users/login', function(req, res){
     };
   });
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

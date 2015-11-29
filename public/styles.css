@@ -202,4 +202,7 @@ h1{
   font-family: 'Raleway', sans-serif;
 }
 
-
+#populated-list{
+  width: 80%;
+  height: 20%;
+}
