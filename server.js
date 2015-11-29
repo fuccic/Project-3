@@ -151,30 +151,29 @@ app.delete('/maps/place', function(req,res){
   // console.log(itinerary);
   var placeNumber = req.body.identification;
   console.log(placeNumber);
-
   console.log(req.body);
 
-    User.findOne({'_id' : currentUser}, 'itineraries', function(err, user){
-      // console.log(user.itineraries);
-    for(var i = 0; i<user.itineraries.length;i++){
-      if (user.itineraries[i].name === itinerary){
-        // console.log(user.itineraries[i].locations);
-        for (var x = 0; x < user.itineraries[i].locations.length; x++) {
-          // console.log(user.itineraries[i].locations[x]);
-          // console.log("LOCATION ID: " + user.itineraries[i].locations[x].id)
-          if(user.itineraries[i].locations[x].id === placeNumber){
-              console.log("THIS IS DELETED: " + user.itineraries[i].locations[x].id);
-                user.itineraries[i].locations[x].remove();
-            } 
-          };
+  User.findOne({'_id' : currentUser}, 'itineraries', function(err, user){
+    // console.log(user.itineraries);
+  for(var i = 0; i<user.itineraries.length;i++){
+    if (user.itineraries[i].name === itinerary){
+      // console.log(user.itineraries[i].locations);
+      for (var x = 0; x < user.itineraries[i].locations.length; x++) {
+        // console.log(user.itineraries[i].locations[x]);
+        // console.log("LOCATION ID: " + user.itineraries[i].locations[x].id)
+        if(user.itineraries[i].locations[x].id === placeNumber){
+            console.log("THIS IS DELETED: " + user.itineraries[i].locations[x].id);
+            user.itineraries[i].locations[x].remove();
+          } 
         };
       };
-      user.save(function(err) {
-          if(err) {
-          console.log(err);
-          } else {
-          console.log(user.itineraries[i].locations);
-          };  
+    };
+    user.save(function(err) {
+      if(err) {
+        console.log(err);
+      } else {
+        console.log(user.itineraries[i].locations);
+      };  
     });
   });
 });
