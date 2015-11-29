@@ -151,7 +151,7 @@ $(function() {
 	$locationList.text(name);
 	console.log(name);
 		$.ajax({
-			url: "http://localhost:3000/maps/place",
+			url: "https://localhost:3000/maps/place",
 			method: "POST",
 			data: mapData
 		}).done(); 
@@ -169,7 +169,7 @@ $(function() {
 			city_lng: lng 
 		};
 		$.ajax({
-			url: "http://localhost:3000/maps",
+			url: "https://localhost:3000/maps",
 			method: "POST",
 			data: mapData
 		}).done();
@@ -257,7 +257,7 @@ var deletePlace = function(){
   		itinerary: currentItinerary
   	}
   	$.ajax({
-		url: 'http://localhost:3000/maps/place',
+		url: 'https://localhost:3000/maps/place',
 		method: 'DELETE',
 		dataType: 'json',
 		data: data
@@ -269,7 +269,7 @@ var $userItineraryList = $('#user-itineraries');
 
 var getItineraries = function(){
 	$.ajax({
-	url: 'http://localhost:3000/users/itineraries',
+	url: 'https://localhost:3000/users/itineraries',
 	method: 'GET',
 	dataType: 'json'
 	}).done(populateItineraries);
@@ -308,7 +308,7 @@ var getLocation = function(data) {
 		"itinerary" : data
 	};
 	$.ajax({
-		url: 'http://localhost:3000/maps/populate',
+		url: 'https://localhost:3000/maps/populate',
 		method: 'GET',
 		dataType: 'json',
 		data: itineraryData
@@ -389,7 +389,7 @@ var createUser = function(){
 		password_hash: password
 	};
 	$.ajax({
-		url: "http://localhost:3000/users",
+		url: "https://localhost:3000/users",
 		method: "POST",
 		data: userData
 	}).done(userShow())
@@ -428,7 +428,7 @@ var signinSubmit = function(){
 		password_hash: passwordInput
 	};
 	$.ajax({
-		url: 'http://localhost:3000/users/login',
+		url: 'https://localhost:3000/users/login',
 		method: 'POST',
 		data: user,
 		statusCode: {
