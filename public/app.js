@@ -201,6 +201,7 @@ $(function() {
 	});
 
 	$itineraryButton.click(function(){	
+		$itineraryList.hide();
 		pacIdChange();
 		$saveLocationButton.hide();
 		initMap();
