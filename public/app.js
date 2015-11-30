@@ -11,6 +11,7 @@ $(function() {
 // =================
 // GRABBER VARIABLES
 // =================
+
 	var $newLocation = $('#new-location');
 	// console.log($newLocation);
 	var $itineraryList = $('#itinerary-info');
@@ -245,13 +246,6 @@ $(function() {
 
 });////////END OF WINDOW ONLOAD
 
-// var $deleteLocation = $('#delete-location-button');
-// console.log($deleteLocation);
-
-//   $deleteLocation.click(function(){
-// 		console.log("location deleted");
-// 		deletePlace();
-// 	});
 
 var $itineraryList = $('#itinerary-list');
 // console.log($itineraryList);
@@ -259,7 +253,7 @@ var $itineraryList = $('#itinerary-list');
 var generateItineraryList = function(data) {
 	// console.log('before ajax');
 	// console.log(data);
-	console.log(currentItinerary);
+	// console.log(currentItinerary);
 	var locationsData = {
 		"itinerary" : data
 	};
@@ -272,18 +266,22 @@ var generateItineraryList = function(data) {
 };
 
 var displayLocations = function(data){
+	console.log(data);
 	$itineraryList.empty();
  	for(var i = 0; i<data.length; i++){
  		// console.log(data[i]);
- 		var $locationItem = $('<li>');
- 		var $locationLink = $('<a href="#"></a>');
- 		var $removeButton = $('<button>');
- 		$locationLink.html(data[i]);
- 		$locationLink.attr({id: i, "class": "location-name"});
- 		$removeButton.attr({"class": "btn-xs btn-default glyphicon glyphicon-minus delete-button"});
- 		$locationItem.append($locationLink);
- 		$locationItem.append($removeButton);
- 		$itineraryList.append($locationItem);
+ 		if(i % 2 === 0){
+	 		var $locationItem = $('<li>');
+	 		var $locationLink = $('<a href="#"></a>');
+	 		var $removeButton = $('<button>');
+	 		$locationLink.html(data[i]);
+	 		$locationLink.attr({id: data[i + 1], "class": "location-name"});
+	 		$removeButton.attr({id: data[i + 1],"class": "delete-button btn-xs btn-default glyphicon glyphicon-minus"});
+	 		$locationItem.append($locationLink);
+	 		$locationItem.append($removeButton);
+	 		$itineraryList.append($locationItem);
+	 		console.log($(".delete-button"));
+	 	}
  	};
  	var currentLocation = $('.location-name');
 	// console.log(currentLocation);
@@ -292,11 +290,25 @@ var displayLocations = function(data){
 		// console.log(typeof $(this).html());
 		console.log("yehahhhh");
 	});
+
+	var $deleteLocation = $('.delete-button');
+	// console.log($deleteLocation);
+
+	$deleteLocation.click(function(){
+		// console.log("location deleted");
+		var buttonId = event.target.id
+		deletePlace(buttonId);
+		$itineraryList.empty();
+		generateItineraryList(currentItinerary);
+		getLocation(currentItinerary);
+	});
+
 };
 
 
-var deletePlace = function(){
-	var placeIdentification = "565b5b0cfa98676bc454ae9a";
+var deletePlace = function(stringId){
+	var placeIdentification = stringId;
+	console.log(placeIdentification);
   	var data = {
   		identification: placeIdentification,
   		itinerary: currentItinerary
@@ -337,7 +349,7 @@ var populateItineraries = function(data){
 		// console.log($(this).html());
 		// console.log(typeof $(this).html());
 		currentItinerary = $(this).html();
-		console.log(currentItinerary);
+		// console.log(currentItinerary);
 		getLocation($(this).html());
 		generateItineraryList(currentItinerary);
 	});

@@ -93,6 +93,7 @@ app.get('/users/locations', function(req, res){
   var currentUser = req.cookies.loggedinId;
   console.log(currentUser);
   var locationsList = [];
+  var locationsIdList = []
   User.findOne({'_id' : currentUser}, 'itineraries', function(err, user){
     for(var i = 0; i<user.itineraries.length;i++){
       if (user.itineraries[i].name === itineraryQuery){
@@ -101,10 +102,12 @@ app.get('/users/locations', function(req, res){
           // console.log(user.itineraries[i].locations[x]);
           // console.log("LOCATION ID: " + user.itineraries[i].locations[x].id)
               locationsList.push(user.itineraries[i].locations[x].name);
+              locationsList.push(user.itineraries[i].locations[x].id);
           };
         };
       };
   console.log(locationsList);
+  console.log(locationsIdList);
   res.send(locationsList);
   });
 });
@@ -197,9 +200,9 @@ app.delete('/maps/place', function(req,res){
       user.save(function(err) {
         if(err) {
           console.log(err);
-        } else {
-          console.log(user.itineraries[i].locations);
-        };  
+        }
+        //   // console.log(user.itineraries[i].locations);
+        // };  
       });
   });
 });
