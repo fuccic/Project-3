@@ -26,7 +26,7 @@ body{
 
 li{
   list-style: none;
-  margin-top: 30px;
+  margin-top: 10px;
 
 }
 .controls {
@@ -213,13 +213,13 @@ h1{
 }
 
 #user-itineraries{
-  margin-top: 30px;
+  margin-top: 40px;
   margin-left: 20px;
-  margin-right: 93px;
+  margin-right: 120px;
 }
 
 #navbar-collapse{
-  margin-top: 20px;
+  margin-top: 0px;
 }
 
 #logout{
@@ -240,21 +240,42 @@ h1{
 #itinerary-list {
   margin-top: 10px;
   float: right;
-  width: 10%;
-  margin-right: 250px;
+  /*width: 10%;*/
+  margin-right: 150px;
 }
 
 .location-name{
-  width: 10px;
   color: white;
+  width: 200px;
 }
 
-#delete-button{
-  float: right;
+.list-group-item{
+  display: inline;
+}
+
+.delete-button{
+  display: inline;
 }
 
 #logo{
   color: white;
   font-family: 'Raleway', sans-serif;
   font-size: 30px;
+  margin-left: 20px;
+}
+
+#navbar-collapse {
+  background-color: rgba(0,0,0,0.2); 
+}
+
+.container-fluid{
+  padding-left: 0px;
+}
+
+#itinerary-button{
+  margin-top: 8px;
+}
+
+#dropdown-button{
+  margin-top: 8px;
 }

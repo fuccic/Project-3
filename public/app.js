@@ -280,7 +280,7 @@ var displayLocations = function(data){
  		var $removeButton = $('<button>');
  		$locationLink.html(data[i]);
  		$locationLink.attr({id: i, "class": "location-name"});
- 		$removeButton.attr({id: "delete-button", "class": "btn btn-default glyphicon glyphicon-minus"});
+ 		$removeButton.attr({"class": "btn-xs btn-default glyphicon glyphicon-minus delete-button"});
  		$locationItem.append($locationLink);
  		$locationItem.append($removeButton);
  		$itineraryList.append($locationItem);
