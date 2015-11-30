@@ -187,6 +187,10 @@ label{
   margin-top: 10px;
 }
 
+.signin-submit{
+  margin-top: 10px;
+}
+
 .splash > img{
   opacity: 0.1;
 }
@@ -291,3 +295,31 @@ li > a:hover {
   color: white;
 }
 
+#username-field{
+  margin-right: auto;
+  margin-left: auto;
+  width: 200px;
+}
+
+#password-field{
+  margin-right: auto;
+  margin-left: auto;
+  width: 200px;
+}
+
+.form{
+  font-size: 15px;
+}
+
+#username{
+  margin-right: auto;
+  margin-left: auto;
+  width: 200px;
+}
+
+#password{
+  margin-top: 10px;
+  margin-right: auto;
+  margin-left: auto;
+  width: 200px;
+}

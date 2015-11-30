@@ -228,6 +228,7 @@ $(function() {
 		Cookies.remove('loggedinId');
 		initMap();
 		currentItinerary = "";
+		// $pacInputGet2.hide();
 		$('#front-page').show();
 		$('#user-page').toggle();
 	});
