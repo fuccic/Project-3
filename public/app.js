@@ -232,11 +232,14 @@ $(function() {
 	// logs user out on click
 	$logoutButton.click(function(){
 		Cookies.remove('loggedinId');
-		initMap();
 		currentItinerary = "";
+		$itineraryList.empty();
+		$userItineraryList.empty();
 		// $pacInputGet2.hide();
 		$('#front-page').show();
 		$('#user-page').toggle();
+		// initMap();
+
 	});
 
 	if(Cookies.get('loggedinId') === undefined){
@@ -432,7 +435,7 @@ var renderMarkers = function(data) {
 		var marker = new google.maps.Marker ({
 	    position: {lat: data[i].lat, lng: data[i].lng},
 	    map: map,
-	    title: data[i]
+	    animation: google.maps.Animation.DROP
 		});
 
 		markerArray.push(marker);
