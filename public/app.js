@@ -14,8 +14,8 @@ $(function() {
 
 	var $newLocation = $('#new-location');
 	// console.log($newLocation);
-	var $itineraryList = $('#itinerary-info');
-	// console.log($itineraryList);
+	var $itineraryList = $('#itinerary-list');
+	console.log($itineraryList);
 	var $cityButton = $('#city-button');
 	// console.log($cityButton);
 	var $saveLocationButton = $('#save-location');
@@ -140,6 +140,8 @@ $(function() {
 		// console.log("Save place to Mongo");
 
 		createPlace();	
+		$pacInputGet.val("");
+		$pacInputGet3.val("");
 		console.log(currentItinerary);
 		getLocation(currentItinerary);
 		generateItineraryList(currentItinerary);
@@ -196,11 +198,15 @@ $(function() {
   var pacIdChange = function(){
 		$pacInputGet.attr("id","pac-input-3");
 		$pacInputGet2.attr("id","pac-input");
+		$pacInputGet.val("");
+		$pacInputGet3.val("");
 	};
 
 	var pacIdChangeBack = function(){
 		$pacInputGet.attr("id","pac-input-2");
 		$pacInputGet3.attr("id","pac-input");
+		$pacInputGet.val("");
+		$pacInputGet3.val("");
 	};
 
 	$closeButton.click(function(){
@@ -209,7 +215,7 @@ $(function() {
 	});
 
 	$itineraryButton.click(function(){	
-		$itineraryList.hide();
+		$itineraryList.empty();
 		pacIdChange();
 		$saveLocationButton.hide();
 		initMap();
@@ -234,11 +240,14 @@ $(function() {
 	// logs user out on click
 	$logoutButton.click(function(){
 		Cookies.remove('loggedinId');
-		initMap();
 		currentItinerary = "";
+		$itineraryList.empty();
+		$userItineraryList.empty();
 		// $pacInputGet2.hide();
 		$('#front-page').show();
 		$('#user-page').toggle();
+		// initMap();
+
 	});
 
 	if(Cookies.get('loggedinId') === undefined){
@@ -423,21 +432,27 @@ var renderMarkers = function(data) {
     marker.setVisible(true);
 	});
 
+	var markerArray = []
+
+	var infowindow = new google.maps.InfoWindow({
+  });
+
 	for(var i=0;i<data.length;i++) {
-		console.log(data);
-		var contentString = "<strong>" + data[i].name + "</strong>" + "<br>" + data[i].address;
-		var infowindow = new google.maps.InfoWindow({
-    	content: contentString
-  	});
+		// console.log(data);
 
 		var marker = new google.maps.Marker ({
 	    position: {lat: data[i].lat, lng: data[i].lng},
 	    map: map,
-	    title: "Maps are cool"
+	    animation: google.maps.Animation.DROP
 		});
 
+		markerArray.push(marker);
+
+		marker.html = "<strong>" + data[i].name + "</strong>" + "<br>" + data[i].address;
+
 		marker.addListener('click', function() {
-    infowindow.open(map, marker);
+    	infowindow.setContent(this.html);
+    	infowindow.open(map, this);	
   	});
 	};
 };
