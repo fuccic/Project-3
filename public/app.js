@@ -121,6 +121,13 @@ $(function() {
 	  });
 	}; //END OF INITMAP FUNCTION	
 
+// ==========================
+// CALLING INIT MAP FUCTION
+// ==========================
+	initMap();
+// ==========================
+// ==========================
+
   $saveLocationButton.click(function() {
 		// console.log("Save place to Mongo");
 
@@ -177,13 +184,6 @@ $(function() {
 			data: mapData
 		}).done();
   };	
-
-// ==========================
-// CALLING INIT MAP FUCTION
-// ==========================
-	initMap();
-// ==========================
-// ==========================
   
   var pacIdChange = function(){
 		$pacInputGet.attr("id","pac-input-3");
@@ -416,12 +416,21 @@ var renderMarkers = function(data) {
 	});
 
 	for(var i=0;i<data.length;i++) {
-		// console.log(data[i]);
+		console.log(data);
+		var contentString = "<strong>" + data[i].name + "</strong>" + "<br>" + data[i].address;
+		var infowindow = new google.maps.InfoWindow({
+    	content: contentString
+  	});
+
 		var marker = new google.maps.Marker ({
 	    position: {lat: data[i].lat, lng: data[i].lng},
 	    map: map,
 	    title: "Maps are cool"
 		});
+
+		marker.addListener('click', function() {
+    infowindow.open(map, marker);
+  	});
 	};
 };
 
