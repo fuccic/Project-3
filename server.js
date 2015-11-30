@@ -66,21 +66,23 @@ app.get('/maps/populate', function(req, res) {
   // console.log(url_parts.query.itinerary);
   var itineraryQuery = url_parts.query.itinerary;
   // console.log(req.url)
-  // var url_parts = url.parse(request.url, true);
-  // var query = url_parts.query;
-  // var itineraryName = req.body.data;
-	// var itineraryName = req.body.trip
   var currentUser = req.cookies.loggedinId;
   var popArray = [];
   User.findOne({'_id' : currentUser}, 'itineraries', function(err, user){
-    for(var i = 0; i<user.itineraries.length;i++){
-      for(var x = 0; x<user.itineraries[i].locations.length; x++){
-        if(user.itineraries[i].name === itineraryQuery){
-          popArray.push(user.itineraries[i].locations[x]);
-          // res.send(user.itineraries[i].locations[x]);
-        };
-      };
-    };
+    if (user === null) {
+      console.log('NO USER');
+      console.log(user);
+    } else {
+      for(var i = 0; i < user.itineraries.length;i++){
+        for(var x = 0; x < user.itineraries[i].locations.length; x++){
+          if(user.itineraries[i].name === itineraryQuery){
+            popArray.push(user.itineraries[i].locations[x]);
+            console.log('LOOP IS RUNNING');
+            // res.send(user.itineraries[i].locations[x]);
+          }
+        }; // end inner loop
+      }; // end outer loop
+    } // end !user
     res.send(popArray);
   });
 });
@@ -89,25 +91,30 @@ app.get('/users/locations', function(req, res){
   var url = require('url');
   var url_parts = url.parse(req.url, true);
   var itineraryQuery = url_parts.query.itinerary;
-  console.log(itineraryQuery);
+  // console.log(itineraryQuery);
   var currentUser = req.cookies.loggedinId;
-  console.log(currentUser);
+  // console.log(currentUser);
   var locationsList = [];
   var locationsIdList = []
   User.findOne({'_id' : currentUser}, 'itineraries', function(err, user){
-    for(var i = 0; i<user.itineraries.length;i++){
-      if (user.itineraries[i].name === itineraryQuery){
-        // console.log(user.itineraries[i].locations);
-        for (var x = 0; x < user.itineraries[i].locations.length; x++) {
-          // console.log(user.itineraries[i].locations[x]);
-          // console.log("LOCATION ID: " + user.itineraries[i].locations[x].id)
-              locationsList.push(user.itineraries[i].locations[x].name);
-              locationsList.push(user.itineraries[i].locations[x].id);
+    if (user === null) {
+      console.log('NO USER');
+      console.log(user);
+    } else {
+      for(var i = 0; i<user.itineraries.length;i++){
+        if (user.itineraries[i].name === itineraryQuery){
+          // console.log(user.itineraries[i].locations);
+          for (var x = 0; x < user.itineraries[i].locations.length; x++) {
+            // console.log(user.itineraries[i].locations[x]);
+            // console.log("LOCATION ID: " + user.itineraries[i].locations[x].id)
+                locationsList.push(user.itineraries[i].locations[x].name);
+                locationsList.push(user.itineraries[i].locations[x].id);
+            };
           };
         };
       };
-  console.log(locationsList);
-  console.log(locationsIdList);
+  // console.log(locationsList);
+  // console.log(locationsIdList);
   res.send(locationsList);
   });
 });
@@ -179,8 +186,8 @@ app.delete('/maps/place', function(req,res){
   var itinerary = req.body.itinerary;
   // console.log(itinerary);
   var placeNumber = req.body.identification;
-  console.log(placeNumber);
-  console.log(req.body);
+  // console.log(placeNumber);
+  // console.log(req.body);
 
     User.findOne({'_id' : currentUser}, 'itineraries', function(err, user){
       // console.log(user.itineraries);
@@ -191,7 +198,6 @@ app.delete('/maps/place', function(req,res){
           // console.log(user.itineraries[i].locations[x]);
           // console.log("LOCATION ID: " + user.itineraries[i].locations[x].id)
           if(user.itineraries[i].locations[x].id === placeNumber){
-              console.log("THIS IS DELETED: " + user.itineraries[i].locations[x].id);
               user.itineraries[i].locations[x].remove();
             } 
           };
@@ -201,8 +207,7 @@ app.delete('/maps/place', function(req,res){
         if(err) {
           console.log(err);
         }
-        //   // console.log(user.itineraries[i].locations);
-        // };  
+        //console.log(user.itineraries[i].locations);
       });
   });
 });
@@ -241,8 +246,8 @@ app.post('/users', function(req, res){
 	password_hash = md5(req.body.password_hash);
 
 	var user = new User({
-  	username: req.body.username,
-  	password_hash: password_hash
+  	password_hash: password_hash,
+    username: req.body.username
 	});
 
 	user.save(function(err) {
@@ -250,13 +255,41 @@ app.post('/users', function(req, res){
       console.log(err);
       res.statusCode = 503;
   	}else{
-      console.log(user.username + ' created!');
+      // console.log(user.username + ' created!');
       //set the cookie!
       res.cookie("loggedinId", user.id);
       res.send(user);
     };  
   });
 });
+
+// app.get('/seed', function(req, res){
+//   var user = new User({
+//     password_hash: "hello",
+//     username: "timmy"
+//   });
+
+//   user.save(function(err) {
+//     if (err){
+//       console.log(err);
+//       res.statusCode = 503;
+//     }else{
+//       // console.log(user.username + ' created!');
+//       //set the cookie!
+//       res.cookie("loggedinId", user.id);
+//       res.send(user);
+//       console.log('user id: ', user.id);
+//     };  
+//   });
+// });
+
+// app.get('/seed/:id', function(req, res){
+//   id = req.params.id;
+//   User.findOne({'_id' : id}, function(err, result) {
+//     res.json(result);
+//   });
+// });
+
 
 // POST request used by signinSubmit and userShow functions in app.js. Allows a user to log in. 
 app.post('/users/login', function(req, res){
@@ -267,7 +300,7 @@ app.post('/users/login', function(req, res){
 
   // Mongoose query below find the user and compares the password hashed for authentication and sets the cookie. 
   User.findOne({'username' : username}).exec(function(err, user){
-    console.log(user);
+    // console.log(user);
     if (user != null && user.password_hash === password_hash) {
       console.log("success");
       res.cookie("loggedinId", user.id);
@@ -278,21 +311,3 @@ app.post('/users/login', function(req, res){
     };
   });
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

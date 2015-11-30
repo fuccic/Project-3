@@ -1,4 +1,4 @@
-console.log("Test");
+// console.log("Test");
 var currentItinerary;
 var user = null;
 
@@ -15,7 +15,7 @@ $(function() {
 	var $newLocation = $('#new-location');
 	// console.log($newLocation);
 	var $itineraryList = $('#itinerary-list');
-	console.log($itineraryList);
+	// console.log($itineraryList);
 	var $cityButton = $('#city-button');
 	// console.log($cityButton);
 	var $saveLocationButton = $('#save-location');
@@ -33,10 +33,10 @@ $(function() {
 	var $nameInput = $('#name-input');
 	// console.log($nameInput);
 	var $locationList = $('#populated-list');
-	console.log($locationList);
+	// console.log($locationList);
 
 	$cityButton.click(function() {
-		console.log("Save map to Mongo");
+		// console.log("Save map to Mongo");
 		currentItinerary = "";
 		currentItinerary = $nameInput.val();
 		// console.log($nameInput.val());
@@ -86,35 +86,8 @@ $(function() {
         map.setCenter(place.geometry.location);
         // map.setZoom(6);  // Why 17? Because it looks good.
       }
-
-        //This code determines the attributes for the marker
-	    // marker.setIcon(({
-	      // url: place.icon,
-	      // size: new google.maps.Size(90, 90),
-	      // icon: "http://bit.ly/1T3NV7i",
-	      // origin: new google.maps.Point(0, 0),
-	      // anchor: new google.maps.Point(17, 34),
-	      // scaledSize: new google.maps.Size(35, 35)
-	    // }));
-
-
 	    marker.setPosition(place.geometry.location);
 	    marker.setVisible(true);
-
-
-	    // var address = '';
-
-	    // console.log(place.address_components);
-
-	    //This contains the data to formate the address in the window that appears when you click the marker
-	    // if (place.address_components) {
-	    //   address = [
-	    //     (place.address_components[0] && place.address_components[0].short_name || ''),
-	    //     (place.address_components[1] && place.address_components[1].short_name || ''),
-	    //     (place.address_components[2] && place.address_components[2].short_name || '')
-	    //   ].join(' ');
-	    // }
-
 	    //This displays the infowindow
 	    infowindow.setContent('<div><strong>' + place.name + '</strong><br>');
 	    infowindow.open(map, marker);
@@ -134,7 +107,7 @@ $(function() {
 		createPlace();	
 		$pacInputGet.val("");
 		$pacInputGet3.val("");
-		console.log(currentItinerary);
+		// console.log(currentItinerary);
 		getLocation(currentItinerary);
 		generateItineraryList(currentItinerary);
 	});
@@ -147,26 +120,26 @@ $(function() {
   	var lng = currentLocation.geometry.location.lng();
   	var address = currentLocation.formatted_address;
   	var phoneNumber = currentLocation.formatted_phone_number;
-	var website = currentLocation.website;
-	var placeId = currentLocation.place_id;
-	// console.log('ajax to create map');
-	var mapData = {
-		name: name,
-		address: address,
-		lat: lat,
-		lng: lng,
-		phone: phoneNumber,
-		website: website,
-		place_id: placeId,
-		itinerary: currentItinerary
-	};
-	$locationList.text(name);
-	console.log(name);
-		$.ajax({
-			url: "http://localhost:3000/maps/place",
-			method: "POST",
-			data: mapData
-		}).done(); 
+		var website = currentLocation.website;
+		var placeId = currentLocation.place_id;
+		// console.log('ajax to create map');
+		var mapData = {
+			name: name,
+			address: address,
+			lat: lat,
+			lng: lng,
+			phone: phoneNumber,
+			website: website,
+			place_id: placeId,
+			itinerary: currentItinerary
+		};
+		$locationList.text(name);
+		// console.log(name);
+			$.ajax({
+				url: "http://localhost:3000/maps/place",
+				method: "POST",
+				data: mapData
+			}).done(); 
   };	
 
 	// function that allows user to create new trip itinerary(map), and to name their trip. 
@@ -215,7 +188,6 @@ $(function() {
 		// console.log($pacInputGet);
 	});
 
-
 	var $signupButton = $('#signup-button');
 	// generates signup form on click
 	$signupButton.click(function(){
@@ -239,7 +211,6 @@ $(function() {
 		$('#front-page').show();
 		$('#user-page').toggle();
 		// initMap();
-
 	});
 
 	if(Cookies.get('loggedinId') === undefined){
@@ -254,9 +225,7 @@ $(function() {
 	$dropdownButton.click(function(){
 		getItineraries();
 	});
-
 });////////END OF WINDOW ONLOAD
-
 
 var $itineraryList = $('#itinerary-list');
 // console.log($itineraryList);
@@ -277,7 +246,7 @@ var generateItineraryList = function(data) {
 };
 
 var displayLocations = function(data){
-	console.log(data);
+	// console.log(data);
 	$itineraryList.empty();
  	for(var i = 0; i<data.length; i++){
  		// console.log(data[i]);
@@ -291,17 +260,12 @@ var displayLocations = function(data){
 	 		$locationItem.append($locationLink);
 	 		$locationItem.append($removeButton);
 	 		$itineraryList.append($locationItem);
-	 		console.log($(".delete-button"));
 	 	}
  	};
- 	var currentLocation = $('.location-name');
+ 	// var currentLocation = $('.location-name');
 	// console.log(currentLocation);
-	$('a').click(currentLocation, function(){
-		// console.log($(this).html());
-		// console.log(typeof $(this).html());
-		console.log("yehahhhh");
-	});
-
+	// $('a').click(currentLocation, function(){
+	// });
 	var $deleteLocation = $('.delete-button');
 	// console.log($deleteLocation);
 
@@ -313,13 +277,11 @@ var displayLocations = function(data){
 		generateItineraryList(currentItinerary);
 		getLocation(currentItinerary);
 	});
-
 };
-
 
 var deletePlace = function(stringId){
 	var placeIdentification = stringId;
-	console.log(placeIdentification);
+	// console.log(placeIdentification);
   	var data = {
   		identification: placeIdentification,
   		itinerary: currentItinerary
@@ -329,7 +291,7 @@ var deletePlace = function(stringId){
 		method: 'DELETE',
 		dataType: 'json',
 		data: data
-	}).done(console.log("Deleted some shit"));
+	}).done();
 };
 
 var $userItineraryList = $('#user-itineraries');
@@ -366,7 +328,6 @@ var populateItineraries = function(data){
 	});
 };
 
-
 var itineraryNames = document.getElementsByClassName('itinerary-name');
 
 // places all of the markers for a specific itinerary on the map. 
@@ -389,14 +350,8 @@ var renderMarkers = function(data) {
  // console.log(data);
 	var map = new google.maps.Map(document.getElementById('map'), {
 		zoom: 10,
-		// maxZoom: 2,
-		// minZoom: 2,
-		// streetViewControl: false,
 		draggable: true,
-		// mapTypeControl: false,
 		center: {lat: data[0].lat, lng: data[0].lng},
-		 // center: new google.maps.LatLng(data.city_lat, data.city_lng)
-		// mapTypeId: google.maps.MapTypeId.ROADMAP
 	});
 	
 	var input = document.getElementById('pac-input');
@@ -431,7 +386,6 @@ var renderMarkers = function(data) {
 
 	for(var i=0;i<data.length;i++) {
 		// console.log(data);
-
 		var marker = new google.maps.Marker ({
 	    position: {lat: data[i].lat, lng: data[i].lng},
 	    map: map,
@@ -457,7 +411,6 @@ var signUpForm = function(){
 	var source = $('#user-signup-template').html();
 	var template = Handlebars.compile(source);
 	formDiv.append(template());
-
 	$('#new-user-submit').click(function(){
 		createUser();
 	});
@@ -526,9 +479,9 @@ var signinSubmit = function(){
 };
 
 var showSplashPage = function(){
-		$('#username').hide();
-		$('#password').hide();
-		$('.signin-submit').hide();
-		$('#signup-button').show();
-		$('#signin-button').show();
+	$('#username').hide();
+	$('#password').hide();
+	$('.signin-submit').hide();
+	$('#signup-button').show();
+	$('#signin-button').show();
 };
