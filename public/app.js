@@ -69,14 +69,14 @@ $(function() {
 	  });
 
 	  autocomplete.addListener('place_changed', function() {
+	    // $itineraryList.empty();
 	    infowindow.close();
 	    marker.setVisible(false);
 	    var place = autocomplete.getPlace();
 	    currentLocation = place;
 	    $addLocation = $('<li>');
-	    $addLocation.html(place.name);
+	    // $addLocation.html(place.name);
 	    $itineraryList.append($addLocation);
-
 
 	    // If the place has a geometry, then present it on a map.
       if (place.geometry.viewport) {
@@ -367,8 +367,8 @@ var renderMarkers = function(data) {
 	marker.setVisible(false);
     var place = autocomplete.getPlace();
     currentLocation = place;
-    $addLocation = $('<li>');
-    $addLocation.html(place.name);
+    // $addLocation = $('<li>');
+    // $addLocation.html(place.name);
     if (place.geometry.viewport) {
       map.fitBounds(place.geometry.viewport);
     } 
