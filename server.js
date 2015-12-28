@@ -156,7 +156,7 @@ app.post('/maps/place', function(req, res) {
     website: website,
     placeId: placeId
   });
-
+ 
   // Mongoose query below finds the currentUser, using the cookie. It loops through the user's itineraries and compares each value to the itinerary key value pair in the req. Once there is a match, that place object is pushed into the locations array. 
   User.findOne({'_id' : currentUser}, 'itineraries', function(err, user){
     for(var i = 0; i<user.itineraries.length;i++){
@@ -175,6 +175,7 @@ app.post('/maps/place', function(req, res) {
       };
      };
   });
+  console.log(place)
 });
 
 

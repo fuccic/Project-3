@@ -2,38 +2,40 @@
 var currentItinerary;
 var user = null;
 
+
+// =================
+// GRABBER VARIABLES
+// =================
+
+var $saveLocationButton = $('#save-location');
+// console.log($saveLocationButton);
+var $locationList = $('#populated-list');
+// console.log($locationList);
+var $newLocation = $('#new-location');
+// console.log($newLocation);
+var $itineraryList = $('#itinerary-list');
+// console.log($itineraryList);
+var $cityButton = $('#city-button');
+// console.log($cityButton);
+var $pacInputGet = $('#pac-input');
+// console.log($pacInputGet);
+var $pacInputGet2 = $('#pac-input-2');
+// console.log($pacInputGet2);
+var $itineraryButton = $('#itinerary-button');
+// console.log($itineraryButton);
+var $pacInputGet3 = $('#pac-input-3');
+// console.log($pacInputGet3);
+var $closeButton = $('#close-button');
+// console.log($closeButton);
+var $nameInput = $('#name-input');
+// console.log($nameInput);
+
 // var map;
 // var bounds = new google.maps.LatLngBounds();
 var currentLocation;
 
 $(function() {
 
-// =================
-// GRABBER VARIABLES
-// =================
-
-	var $newLocation = $('#new-location');
-	// console.log($newLocation);
-	var $itineraryList = $('#itinerary-list');
-	// console.log($itineraryList);
-	var $cityButton = $('#city-button');
-	// console.log($cityButton);
-	var $saveLocationButton = $('#save-location');
-	// console.log($saveLocationButton);
-	var $pacInputGet = $('#pac-input');
-	// console.log($pacInputGet);
-	var $pacInputGet2 = $('#pac-input-2');
-	// console.log($pacInputGet2);
-	var $itineraryButton = $('#itinerary-button');
-	// console.log($itineraryButton);
-	var $pacInputGet3 = $('#pac-input-3');
-	// console.log($pacInputGet3);
-	var $closeButton = $('#close-button');
-	// console.log($closeButton);
-	var $nameInput = $('#name-input');
-	// console.log($nameInput);
-	var $locationList = $('#populated-list');
-	// console.log($locationList);
 
 	$cityButton.click(function() {
 		// console.log("Save map to Mongo");
@@ -46,47 +48,6 @@ $(function() {
 		createMap();
 	});
 
-
-  $saveLocationButton.click(function() {
-		// console.log("Save place to Mongo");
-
-		createPlace();	
-		$pacInputGet.val("");
-		$pacInputGet3.val("");
-		// console.log(currentItinerary);
-		getLocation(currentItinerary);
-		generateItineraryList(currentItinerary);
-	});
-
-	// allows user to input a location and makes an ajax request to add it to the user's itinerary
-  var createPlace = function() {
-  	// console.log(currentItinerary);
-  	var name = currentLocation.name;
-  	var lat = currentLocation.geometry.location.lat();
-  	var lng = currentLocation.geometry.location.lng();
-  	var address = currentLocation.formatted_address;
-  	var phoneNumber = currentLocation.formatted_phone_number;
-		var website = currentLocation.website;
-		var placeId = currentLocation.place_id;
-		// console.log('ajax to create map');
-		var mapData = {
-			name: name,
-			address: address,
-			lat: lat,
-			lng: lng,
-			phone: phoneNumber,
-			website: website,
-			place_id: placeId,
-			itinerary: currentItinerary
-		};
-		$locationList.text(name);
-		// console.log(name);
-			$.ajax({
-				url: "http://localhost:3000/maps/place",
-				method: "POST",
-				data: mapData
-			}).done(); 
-  };	
 
 	// function that allows user to create new trip itinerary(map), and to name their trip. 
   var createMap = function() {
@@ -172,6 +133,58 @@ $(function() {
 		getItineraries();
 	});
 });////////END OF WINDOW ONLOAD
+
+	// allows user to input a location and makes an ajax request to add it to the user's itinerary
+var createPlace = function() {
+	// console.log(currentLocation.formatted_address);
+	var name = currentLocation.name;
+	var lat = currentLocation.geometry.location.lat();
+	var lng = currentLocation.geometry.location.lng();
+	var address = currentLocation.formatted_address;
+	var phoneNumber = currentLocation.formatted_phone_number;
+	var website = currentLocation.website;
+	var placeId = currentLocation.place_id;
+	// console.log('ajax to create map');
+	var mapData = {
+		name: name,
+		address: address,
+		lat: lat,
+		lng: lng,
+		phone: phoneNumber,
+		website: website,
+		place_id: placeId,
+		itinerary: currentItinerary
+	};
+	$locationList.text(name);
+	// console.log(name);
+		$.ajax({
+			url: "http://localhost:3000/maps/place",
+			method: "POST",
+			data: mapData
+		}).done(); 
+};	
+
+$saveLocationButton.click(function() {
+	// console.log("saveLocationButton clicked");
+	console.log(currentItinerary);
+	createPlace();	
+	// console.log('place created', createPlace());
+	$pacInputGet.val("");
+	$pacInputGet3.val("");
+	// console.log(currentItinerary);
+	setTimeout(updateList, 200);
+});
+
+var updateList = function (){
+	// console.log('generateItineraryList(currentItinerary): ', generateItineraryList(currentItinerary));
+	generateItineraryList(currentItinerary);
+	getLocation(currentItinerary);
+
+	console.log(currentItinerary);
+		// console.log('getLocation(currentItinerary): ', getLocation(currentItinerary));
+	// displayLocations()
+}
+
 
 var $itineraryList = $('#itinerary-list');
 // console.log($itineraryList);
