@@ -104,6 +104,7 @@ li{
   font-weight: 300;
   margin-top: 4px;
   margin-left: 9px;
+  width: 200px;
 }
 
 .pac-container {
@@ -116,8 +117,8 @@ li{
 }
 .modal{
     z-index: 20; 
-    top:15%;
-    left:65%;
+    top:10%;
+    left:40%;
     outline: none; 
 }
 .modal-backdrop{
@@ -353,10 +354,6 @@ li > a:hover {
 }
 
 @media (max-width: 600px) {
-  #logo{
-    margin-left: 0px;
-    font-size: 20px;'
-  }
   #map{
     width: 90%;
     margin-right: auto;
@@ -365,9 +362,23 @@ li > a:hover {
   .modal{
     z-index: 20; 
     top:15%;
-    left: 20%;
+    left: 5%;
     outline: none;
-
+  }
+  #itinerary-container{
+    margin-left: 0px;
+  }
+  #user-itineraries{
+    margin-right: 3.5em;
+    margin-top: 6.5em;
+  }
+  #dropdown-button{
+    margin-right: 10em;
+    margin-bottom: 1em;
+  }
+  #logo{
+    margin-left: 0px;
+  }
 }
 
 /*@media screen and (min-device-width : 400px){  
