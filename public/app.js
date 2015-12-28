@@ -233,8 +233,7 @@ var displayLocations = function(data){
 		var buttonId = event.target.id
 		deletePlace(buttonId);
 		$itineraryList.empty();
-		generateItineraryList(currentItinerary);
-		getLocation(currentItinerary);
+		setTimeout(updateList, 50);
 	});
 };
 
