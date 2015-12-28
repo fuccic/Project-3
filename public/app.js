@@ -46,60 +46,6 @@ $(function() {
 		createMap();
 	});
 
-	// function that initalizes Google map, location autocomplete, sets marker positons on location. 
-	function initMap() {
-	  var map = new google.maps.Map(document.getElementById('map'), {
-	    center: {lat: 0, lng: 0},
-	    zoom: 1
-	  });
-	 
-	  var input = document.getElementById('pac-input');
-	  // var types = document.getElementById('type-selector');
-	  // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-	  // map.controls[google.maps.ControlPosition.TOP_LEFT].push(types);
-
-	  var autocomplete = new google.maps.places.Autocomplete(input);
-	  autocomplete.bindTo('bounds', map);
-
-	  var infowindow = new google.maps.InfoWindow();
-	  
-	  var marker = new google.maps.Marker({
-	    map: map,
-	    anchorPoint: new google.maps.Point(0, -29)
-	  });
-
-	  autocomplete.addListener('place_changed', function() {
-	    // $itineraryList.empty();
-	    infowindow.close();
-	    marker.setVisible(false);
-	    var place = autocomplete.getPlace();
-	    currentLocation = place;
-	    $addLocation = $('<li>');
-	    // $addLocation.html(place.name);
-	    $itineraryList.append($addLocation);
-
-	    // If the place has a geometry, then present it on a map.
-      if (place.geometry.viewport) {
-        map.fitBounds(place.geometry.viewport);
-      } 
-      else {
-        map.setCenter(place.geometry.location);
-        // map.setZoom(6);  // Why 17? Because it looks good.
-      }
-	    marker.setPosition(place.geometry.location);
-	    marker.setVisible(true);
-	    //This displays the infowindow
-	    infowindow.setContent('<div><strong>' + place.name + '</strong><br>');
-	    infowindow.open(map, marker);
-	  });
-	}; //END OF INITMAP FUNCTION	
-
-// ==========================
-// CALLING INIT MAP FUCTION
-// ==========================
-	initMap();
-// ==========================
-// ==========================
 
   $saveLocationButton.click(function() {
 		// console.log("Save place to Mongo");
@@ -439,6 +385,9 @@ var userShow = function(data){
 	frontPage.hide();
 	userPage.toggle();
 	user = Cookies.get('loggedinId');
+	// setTimeout(initMap, 2000);
+	initMap();
+	// console.log(map)
 };
 
 // shows user sign in field, on click it runs sign in submit
@@ -485,3 +434,52 @@ var showSplashPage = function(){
 	$('#signup-button').show();
 	$('#signin-button').show();
 };
+
+
+// function that initalizes Google map, location autocomplete, sets marker positons on location. 
+function initMap() {
+  var map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: 0, lng: 0},
+    zoom: 1
+  });
+ 
+  var input = document.getElementById('pac-input');
+  // var types = document.getElementById('type-selector');
+  // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+  // map.controls[google.maps.ControlPosition.TOP_LEFT].push(types);
+
+  var autocomplete = new google.maps.places.Autocomplete(input);
+  autocomplete.bindTo('bounds', map);
+
+  var infowindow = new google.maps.InfoWindow();
+  
+  var marker = new google.maps.Marker({
+    map: map,
+    anchorPoint: new google.maps.Point(0, -29)
+  });
+
+  autocomplete.addListener('place_changed', function() {
+    // $itineraryList.empty();
+    infowindow.close();
+    marker.setVisible(false);
+    var place = autocomplete.getPlace();
+    currentLocation = place;
+    $addLocation = $('<li>');
+    // $addLocation.html(place.name);
+    $itineraryList.append($addLocation);
+
+    // If the place has a geometry, then present it on a map.
+    if (place.geometry.viewport) {
+      map.fitBounds(place.geometry.viewport);
+    } 
+    else {
+      map.setCenter(place.geometry.location);
+      // map.setZoom(6);  // Why 17? Because it looks good.
+    }
+    marker.setPosition(place.geometry.location);
+    marker.setVisible(true);
+    //This displays the infowindow
+    infowindow.setContent('<div><strong>' + place.name + '</strong><br>');
+    infowindow.open(map, marker);
+  });
+}; //END OF INITMAP FUNCTION	
