@@ -1,26 +1,29 @@
 html, body {
 height: 100%;
-margin: 0;
-padding: 0;
-min-height: 100%;
+background: black;
+background-image: url("images/2.jpg");
+background-size: cover; 
+background-repeat: no-repeat;
+vertical-align: center;
+margin: center;
 }
 
 body{
   margin-top: 0px;
 }
-
+/*
 #map-container{
   margin-top: 50px;
   margin-right: 0px;
-  height: 70px;
+  height: 150%;
   width: 80%;
-}
+}*/
 
 #map {
-    float: left;
-    margin-left: 40px;
-    height: 400px; 
-    width: 800px;
+    /*float: left;*/
+    margin-left: 3em;
+    height: 100%; 
+    width: 50%;
     background-color: papayawhip;
 }
 
@@ -38,6 +41,12 @@ li{
   height: 32px;
   outline: none;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+#itinerary-container{
+  margin-top: .5%;
+  margin-left: 1.25em;
+  height: 1em;
 }
 
 #pac-input {
@@ -175,13 +184,14 @@ label{
   margin-bottom: 5%;
 }
 
-.splash{
-  background: black;
-  background-image: url("images/2.jpg");
-  background-size: 100%; 
+/*.splash{
+  background: black;*/
+  /*background-image: url("images/2.jpg");*/
+/*  background-size: cover; 
   background-repeat: no-repeat;
-  
-}
+  vertical-align: center;
+  margin: center;
+}*/
 
 #signin-button{
   margin-top: 10px;
@@ -246,11 +256,27 @@ h1{
 >>>>>>> display-div*/
 
 #itinerary-list {
-  margin-top: 10px;
-  float: right;
-  /*width: 10%;*/
-  margin-right: 210px;
+  /*margin-left: 1em;*/
+  height: 200px;
+  overflow: auto;
+  overflow-y: scroll;
+  /*border-color: */
+  background-color: rgba(0,0,0,0.2);
+  margin: .5em;
 }
+
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0,0,0,0.2);
+    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+}
+
+/*#locations-list{
+}*/
 
 .location-name{
   color: white;
@@ -276,10 +302,12 @@ h1{
 
 #navbar-collapse {
   background-color: rgba(0,0,0,0.2); 
+  width: 100%;
 }
 
 .container-fluid{
   padding-left: 0px;
+  padding-right: 0px;
 }
 
 #itinerary-button{
@@ -323,3 +351,34 @@ li > a:hover {
   margin-left: auto;
   width: 200px;
 }
+
+@media (max-width: 600px) {
+  #logo{
+    margin-left: 0px;
+    font-size: 20px;'
+  }
+  #map{
+    width: 90%;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  .modal{
+    z-index: 20; 
+    top:15%;
+    left: 20%;
+    outline: none;
+
+}
+
+/*@media screen and (min-device-width : 400px){  
+  #logo{
+    margin-left: 0px;
+    font-size: 20px;'
+  }*/
+/*  .modal{
+    z-index: 20; 
+    top:15%;
+    left: 20%;
+    outline: none; 
+}*/
+/*}*/

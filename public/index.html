@@ -45,17 +45,19 @@
       </div>
     </nav>
     <div id="map" class="col-md-6 img-rounded"></div>
-    <input class="form-control" id="pac-input" placeholder="Enter a location"></input>
-    <button id="save-location" type="button" class="btn btn-default btn-md" aria-label="Left Align">
-      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-    </button>
-    <div id="locations-list">
-      <ul id="itinerary-list">
-     <!--    <li>
-        <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
-        </li> -->
-      </ul>
-   </div>
+    <div id="itinerary-container"  class="col-md-5">
+      <input class="form-control" id="pac-input" placeholder="Enter a location"></input>
+      <button id="save-location" type="button" class="btn btn-default btn-md" aria-label="Left Align">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+      </button>
+        <div id="locations-list">
+          <ul id="itinerary-list" class="col-md-8">
+         <!--    <li>
+            <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
+            </li> -->
+          </ul>
+       </div>
+    </div>
     <!-- ITINERARY MODAL -->
     <div class="modal fade" id="myModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
       <div class="modal-dialog modal-sm" role="document">
