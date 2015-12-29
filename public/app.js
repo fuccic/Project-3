@@ -65,7 +65,6 @@ $(function() {
 	  
 	  var marker = new google.maps.Marker({
 	    map: map,
-	    animation: google.maps.Animation.BOUNCE,
 	    anchorPoint: new google.maps.Point(0, -29)
 	  });
 
@@ -92,13 +91,6 @@ $(function() {
 	    //This displays the infowindow
 	    infowindow.setContent('<div><strong>' + place.name + '</strong><br>');
 	    infowindow.open(map, marker);
-	     function toggleBounce() {
-  			if (marker.getAnimation() !== null) {
-    		marker.setAnimation(null);
-  			} else {
-    		marker.setAnimation(google.maps.Animation.BOUNCE);
- 			}
-		}	
 	  });
 	}; //END OF INITMAP FUNCTION	
 
