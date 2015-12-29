@@ -352,8 +352,8 @@ var renderMarkers = function(data) {
 // generates the sign up form, on click it runs the createUser function 
 var signUpForm = function(){
 	var formDiv = $('#form-container');
-	$('#signup-button').remove();
-	$('#signin-button').remove();
+	$('#signup-button').hide();
+	$('#signin-button').hide();
 	var source = $('#user-signup-template').html();
 	var template = Handlebars.compile(source);
 	formDiv.append(template());
@@ -376,7 +376,7 @@ var createUser = function(){
 		method: "POST",
 		data: userData,
 		statusCode: {
-      		409: function (response) {
+      	409: function (response) {
       			console.log("username exists");
       			showAlert();
      		},
@@ -391,7 +391,6 @@ var createUser = function(){
 var showAlert = function(){
 	$usernameAlert.css("display", "block");
 }
-
 
 // 
 var userShow = function(data){
