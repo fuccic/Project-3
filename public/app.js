@@ -29,7 +29,8 @@ var $closeButton = $('#close-button');
 // console.log($closeButton);
 var $nameInput = $('#name-input');
 // console.log($nameInput);
-
+var $usernameAlert = $('.alert');
+console.log($usernameAlert);
 // var map;
 // var bounds = new google.maps.LatLngBounds();
 var currentLocation;
@@ -105,19 +106,6 @@ $(function() {
 	// generates signin form on click
 	$signinButton.click(function(){
 		showSignIn();
-	});
-
-	var $logoutButton = $('#logout');
-	// logs user out on click
-	$logoutButton.click(function(){
-		Cookies.remove('loggedinId');
-		currentItinerary = "";
-		$itineraryList.empty();
-		$userItineraryList.empty();
-		// $pacInputGet2.hide();
-		$('#front-page').show();
-		$('#user-page').toggle();
-		// initMap();
 	});
 
 	if(Cookies.get('loggedinId') === undefined){
@@ -386,9 +374,24 @@ var createUser = function(){
 	$.ajax({
 		url: "http://localhost:3000/users",
 		method: "POST",
-		data: userData
-	}).done(userShow())
+		data: userData,
+		statusCode: {
+      		409: function (response) {
+      			console.log("username exists");
+      			showAlert();
+     		},
+     		200: function (response) {
+     			console.log(response);
+         		userShow();
+     		}
+     	}
+	})
 };
+
+var showAlert = function(){
+	$usernameAlert.css("display", "block");
+}
+
 
 // 
 var userShow = function(data){
@@ -399,6 +402,7 @@ var userShow = function(data){
 	user = Cookies.get('loggedinId');
 	// setTimeout(initMap, 2000);
 	initMap();
+	$usernameAlert.hide();
 	// console.log(map)
 };
 
@@ -442,10 +446,27 @@ var signinSubmit = function(){
 var showSplashPage = function(){
 	$('#username').hide();
 	$('#password').hide();
+	$('#username-field').hide();
+	$('#password-field').hide();
+	$('#new-user-submit').hide();
 	$('.signin-submit').hide();
 	$('#signup-button').show();
 	$('#signin-button').show();
 };
+
+var $logoutButton = $('#logout');
+// logs user out on click
+$logoutButton.click(function(){
+	Cookies.remove('loggedinId');
+	currentItinerary = "";
+	$itineraryList.empty();
+	$userItineraryList.empty();
+	// $pacInputGet2.hide();
+	$('#front-page').show();
+	$('#user-page').toggle();
+	// initMap();
+	showSplashPage();
+});
 
 
 // function that initalizes Google map, location autocomplete, sets marker positons on location. 

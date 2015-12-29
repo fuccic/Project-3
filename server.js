@@ -1,4 +1,4 @@
-r// =============
+// =============
 // REQUIREMENTS
 // =============
 var express = require('express'),
@@ -244,23 +244,36 @@ app.post('/maps', function(req, res) {
 
 // POST requet used by createUser and userShow functions in app.js. Creates a user. 
 app.post('/users', function(req, res){
-	password_hash = md5(req.body.password_hash);
-
-	var user = new User({
-  	password_hash: password_hash,
-    username: req.body.username
-	});
-
-	user.save(function(err) {
-  	if (err){
-      console.log(err);
-      res.statusCode = 503;
-  	}else{
-      // console.log(user.username + ' created!');
-      //set the cookie!
-      res.cookie("loggedinId", user.id);
-      res.send(user);
-    };  
+  password_hash = md5(req.body.password_hash);
+  username = req.body.username;
+  var user2 = new User({
+    password_hash: password_hash,
+    username: username
+  });
+  // var user2 = {
+  //   password_hash: password_hash,
+  //   username: username
+  // };
+  User.findOne({'username' : username}).exec(function(err, user){
+    // console.log(user2);
+    if (user != null && user.username === username) {
+        res.statusCode = 409;
+        res.send(res.statusCode);
+        console.log(res.statusCode);
+          }
+    else{
+      user2.save(function(err) {
+        if (err){
+          console.log(err);
+          res.statusCode = 503;
+        }else{
+          // console.log(user.username + ' created!');
+          //set the cookie!
+          res.cookie("loggedinId", user2.id);
+          res.send(user2);
+        }; 
+      }); 
+    };
   });
 });
 

@@ -381,6 +381,17 @@ li > a:hover {
   }
 }
 
+.alert{
+  width: 25%;
+  height: 5%;
+  margin-top: 1em;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 3%;
+  text-align: center;
+  display: none;
+}
+
 /*@media screen and (min-device-width : 400px){  
   #logo{
     margin-left: 0px;
