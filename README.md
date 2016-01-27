@@ -24,7 +24,7 @@ Premade itineraries based on the user's travel style(adventurous, foodie etc.).
 
 Sharing/Viewing Itineraries: A user can select "View Itineraries, and index lists itineraries created by other users for that city. The current user selects an itinerary and is shown the selected itinerary, which displays points of interests and a Google Map with markers that correspond to each item.
 
-GitHub: https://github.com/fuccic/Project-3
+GitHub: https://github.com/fuccic/Trip-a-dee
 
 Heroku: https://fierce-lake-5204.herokuapp.com/#
 
